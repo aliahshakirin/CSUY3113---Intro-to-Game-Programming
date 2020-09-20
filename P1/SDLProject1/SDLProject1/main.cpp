@@ -18,13 +18,13 @@ SDL_Window* displayWindow;
 bool gameIsRunning = true;
 
 ShaderProgram program;
-glm::mat4 viewMatrix, playerMatrix, projectionMatrix, teacherMatrix;
+glm::mat4 viewMatrix, playerMatrix, projectionMatrix, profMatrix;
 
 float player_x;
-float teacher_rotate;
+float prof_rotate;
 
 GLuint playerTextureID;
-GLuint teacherTextureID;
+GLuint profTextureID;
 
 GLuint LoadTexture(const char* filePath) {
     int w, h, n;
@@ -70,13 +70,18 @@ void Initialize() {
     glEnable(GL_BLEND);
     
     player_x = 0;
-    teacher_rotate = 0;
+    prof_rotate = 0;
     
     // Good setting for transparency
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     playerTextureID = LoadTexture("george_1.png");
-    teacherTextureID = LoadTexture("ctg.png");
+    profTextureID = LoadTexture("ctg.png");
+    
+    // player starting position
+    playerMatrix = glm::mat4(1.0f);
+    player_x = -5.0f;
+    playerMatrix = glm::translate(playerMatrix, glm::vec3(player_x,0.0f,0.0f));
 }
 
 void ProcessInput() {
@@ -95,15 +100,17 @@ void Update() {
     float deltaTime = ticks - lastTicks;
     lastTicks = ticks;
     
-    player_x += 1.0f * deltaTime;
+    
     playerMatrix = glm::mat4(1.0f);
+    player_x += 1.0f * deltaTime;
+
     playerMatrix = glm::translate(playerMatrix, glm::vec3(player_x,0.0f,0.0f));
     
-    teacher_rotate += 90.0f * deltaTime;
+    prof_rotate += 90.0f * deltaTime;
     
-    teacherMatrix = glm::mat4(1.0f);
-    teacherMatrix = glm::translate(teacherMatrix, glm::vec3(0.0f,2.0f,0.0f));
-    teacherMatrix = glm::rotate(teacherMatrix, glm::radians(teacher_rotate), glm::vec3(0.0f,0.0f,1.0f));
+    profMatrix = glm::mat4(1.0f);
+    profMatrix = glm::translate(profMatrix, glm::vec3(0.0f,2.0f,0.0f));
+    profMatrix = glm::rotate(profMatrix, glm::radians(prof_rotate), glm::vec3(0.0f,0.0f,1.0f));
     
 }
 
@@ -122,8 +129,8 @@ void Render() {
     glBindTexture(GL_TEXTURE_2D, playerTextureID);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     
-    program.SetModelMatrix(teacherMatrix);
-    glBindTexture(GL_TEXTURE_2D, teacherTextureID);
+    program.SetModelMatrix(profMatrix);
+    glBindTexture(GL_TEXTURE_2D, profTextureID);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     
     glDisableVertexAttribArray(program.positionAttribute);
