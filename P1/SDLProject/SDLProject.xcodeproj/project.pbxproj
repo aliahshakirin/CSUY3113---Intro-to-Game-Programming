@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4FB5100B251314A0008268BC /* ctg.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FB5100A25131483008268BC /* ctg.png */; };
-		4FB5100D251326CA008268BC /* george_1.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FB5100C251326C5008268BC /* george_1.png */; };
+		4FF6EBFA2517F424001BC400 /* george_1.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FF6EBF92517F413001BC400 /* george_1.png */; };
+		4FF6EBFB2517F429001BC400 /* ctg.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FF6EBF82517F40E001BC400 /* ctg.png */; };
 		DBDF1B532323DE3F007CECB1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBDF1B522323DE3F007CECB1 /* main.cpp */; };
 		DBDF1B5E2323DE8D007CECB1 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBDF1B5D2323DE8D007CECB1 /* ShaderProgram.cpp */; };
 		DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */ = {isa = PBXBuildFile; fileRef = DBDF1B5C2323DE8D007CECB1 /* shaders */; };
@@ -27,16 +27,16 @@
 			dstSubfolderSpec = 6;
 			files = (
 				DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */,
-				4FB5100B251314A0008268BC /* ctg.png in CopyFiles */,
-				4FB5100D251326CA008268BC /* george_1.png in CopyFiles */,
+				4FF6EBFA2517F424001BC400 /* george_1.png in CopyFiles */,
+				4FF6EBFB2517F429001BC400 /* ctg.png in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4FB5100A25131483008268BC /* ctg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ctg.png; sourceTree = "<group>"; };
-		4FB5100C251326C5008268BC /* george_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = george_1.png; sourceTree = "<group>"; };
+		4FF6EBF82517F40E001BC400 /* ctg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ctg.png; sourceTree = "<group>"; };
+		4FF6EBF92517F413001BC400 /* george_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = george_1.png; sourceTree = "<group>"; };
 		DBDF1B4F2323DE3F007CECB1 /* SDLProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDLProject; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBDF1B522323DE3F007CECB1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DBDF1B592323DE8D007CECB1 /* ShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderProgram.h; sourceTree = "<group>"; };
@@ -87,8 +87,8 @@
 		DBDF1B512323DE3F007CECB1 /* SDLProject */ = {
 			isa = PBXGroup;
 			children = (
-				4FB5100C251326C5008268BC /* george_1.png */,
-				4FB5100A25131483008268BC /* ctg.png */,
+				4FF6EBF92517F413001BC400 /* george_1.png */,
+				4FF6EBF82517F40E001BC400 /* ctg.png */,
 				DBDF1B5B2323DE8D007CECB1 /* glm */,
 				DBDF1B5D2323DE8D007CECB1 /* ShaderProgram.cpp */,
 				DBDF1B592323DE8D007CECB1 /* ShaderProgram.h */,
