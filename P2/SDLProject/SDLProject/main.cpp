@@ -37,6 +37,7 @@ float player1_points = 0;
 float player2_points = 0;
 
 bool gameEnd = false;
+bool barPressed = false;
 
 void Initialize() {
     SDL_Init(SDL_INIT_VIDEO);
@@ -71,6 +72,14 @@ void Initialize() {
     player2_position.x = 4.75;
 }
 
+//RESET POSITION OF PADDLES AND BALLS TO STARTING POSITION
+void resetPosition(glm::vec3* ball, glm::vec3* paddle1, glm::vec3* paddle2) {
+    ball->x = 0;
+    ball->y = 0;
+    paddle1->y = 0;
+    paddle2->y = 0;
+}
+
 void ProcessInput() {
     
     player1_movement = glm::vec3(0);
@@ -101,14 +110,15 @@ void ProcessInput() {
                 // Some sort of action
                     break;
                 case SDLK_SPACE: // set random value
-                    ball_movement.y = 0.5f;
-                    ball_movement.x = 0.5f;
+                    if (!barPressed) { //CHECK IF BAR HAS PRESSED ONCE SINCE GAME STARTED
+                        ball_movement.y = 0.5f;
+                        ball_movement.x = 0.5f;
+                        barPressed = true;
+                    }
                     if (gameEnd) {
-                        ball_position.x = 0;
-                        ball_position.y = 0;
-                        player1_position.y = 0;
-                        player2_position.y = 0;
+                        resetPosition(&ball_position, &player1_position, &player2_position);
                         gameEnd = false;
+                        barPressed = false;
                     }
                     break;
             }
@@ -122,10 +132,6 @@ void ProcessInput() {
     }
     else if (keys[SDL_SCANCODE_DOWN]) {
         player2_movement.y = -1.0f;
-//        if (gameEnd) {
-//            player2_movement.y = 0;
-//            player
-//        }
     }
     if(keys[SDL_SCANCODE_W]) {
         player1_movement.y = 1.0f;
@@ -139,6 +145,49 @@ void ProcessInput() {
 
 float lastTicks = 0.0f;
 
+//CHECK PADDLE WINDOW COLLISION
+void windowPaddleCollision(glm::vec3* position, glm::vec3* old, float top, float bottom) {
+    
+      if (top > 3.75f) {
+          position->y = old->y;
+      }
+      if (bottom < -3.75) {
+          position->y = old->y;
+      }
+}
+
+//CHECK BALL WINDOW COLLISION
+void windowBallCollision(glm::vec3* movement, float top, float bottom, float left, float right) {
+    
+    if(top > 3.75) {
+        movement->y = -movement->y;
+    } else if (bottom < -3.75) {
+        movement->y = -movement->y;
+    } else if (right > 5.0) {
+        movement->x = 0;
+        movement->y = 0;
+        gameEnd = true;
+    } else if (left < -5.0) {
+        movement->x = 0;
+        movement->y = 0;
+        gameEnd = true;
+    }
+}
+
+//CHECK PADDLE BALL COLLISION
+void paddleBallCollision(glm::vec3* movement, float x_dist, float y_dist) {
+    if(x_dist < 0 && y_dist < 0) {
+        movement->x = -(movement->x);
+    }
+   
+}
+
+//SET PADDLE MOVEMENT TO 0
+void disablePaddle(glm::vec3* paddle1, glm::vec3* paddle2) {
+    paddle1->y = 0;
+    paddle2->y = 0;
+}
+
 void Update() {
     float ticks = (float)SDL_GetTicks() / 1000.0f; float deltaTime = ticks - lastTicks;
     lastTicks = ticks;
@@ -151,9 +200,9 @@ void Update() {
     glm::vec3 oldP1 = player1_position;
     glm::vec3 oldP2 = player2_position;
     
+    //PADDLE CAN'T MOVE WHEN GAME ENDS
     if(gameEnd) {
-        player1_movement.y = 0;
-        player2_movement.y = 0;
+        disablePaddle(&player1_movement, &player2_movement);
     }
     
     player1_position += player1_movement * player_speed * deltaTime;
@@ -183,47 +232,19 @@ void Update() {
  
     
     //CHECK PADDLE 1 WINDOW COLLISION
-    if (p1_top > 3.75f) {
-        player1_position.y = oldP1.y;
-    }
-    
-    if (p1_bottom < -3.75) {
-        player1_position.y = oldP1.y;
-    }
+    windowPaddleCollision(&player1_position, &oldP1, p1_top, p1_bottom);
     
     //CHECK PADDLE 2 WINDOW COLLISION
-    if (p2_top > 3.75f) {
-         player2_position.y = oldP2.y;
-     }
-     
-     if (p2_bottom < -3.75f) {
-         player2_position.y = oldP2.y;
-     }
+    windowPaddleCollision(&player2_position, &oldP2, p2_top, p2_bottom);
     
     //CHECK BALL WINDOW COLLISION
-    if(ball_top > 3.75) {
-        ball_movement.y = -ball_movement.y;
-    } else if (ball_bottom < -3.75) {
-        ball_movement.y = -ball_movement.y;
-    } else if (ball_right > 5.0) {
-        ball_movement.x = 0;
-        ball_movement.y = 0;
-        gameEnd = true;
-    } else if (ball_left < -5.0) {
-        ball_movement.x = 0;
-        ball_movement.y = 0;
-        gameEnd = true;
-    }
+    windowBallCollision(&ball_movement, ball_top, ball_bottom, ball_left, ball_right);
     
     //CHECK BALL PADDLE 1 COLLISION
-    if(x_dist1 < 0 && y_dist1 < 0) {
-        ball_movement.x = -ball_movement.x;
-    }
+    paddleBallCollision(&ball_movement, x_dist1, y_dist1);
     
     //CHECK BALL PADDLE 2 COLLISION
-    if(x_dist2 < 0 && y_dist2 < 0) {
-        ball_movement.x = -ball_movement.x;
-    }
+    paddleBallCollision(&ball_movement, x_dist2, y_dist2);
     
     ball_position += ball_movement * ball_speed * deltaTime;
     
