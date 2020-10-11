@@ -177,7 +177,7 @@ void windowBallCollision(glm::vec3* movement, float top, float bottom, float lef
 //CHECK PADDLE BALL COLLISION
 void paddleBallCollision(glm::vec3* movement, float x_dist, float y_dist) {
     if(x_dist < 0 && y_dist < 0) {
-        movement->x = -(movement->x);
+        movement->x = -(movement->x); //REVERSE DIRECTION
     }
    
 }
@@ -241,10 +241,14 @@ void Update() {
     windowBallCollision(&ball_movement, ball_top, ball_bottom, ball_left, ball_right);
     
     //CHECK BALL PADDLE 1 COLLISION
-    paddleBallCollision(&ball_movement, x_dist1, y_dist1);
+    if(x_dist1 < 0 && y_dist1 < 0) {
+        ball_movement.x = abs(ball_movement.x); // CHANGE DIRECTION TO RIGHT
+    }
     
     //CHECK BALL PADDLE 2 COLLISION
-    paddleBallCollision(&ball_movement, x_dist2, y_dist2);
+    if(x_dist2 < 0 && y_dist2 < 0) {
+        ball_movement.x = -abs(ball_movement.x); // CHANGE DIRECTION TO LEFT
+    }
     
     ball_position += ball_movement * ball_speed * deltaTime;
     
