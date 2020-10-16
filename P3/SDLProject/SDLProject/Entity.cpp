@@ -1,5 +1,12 @@
 #include "Entity.h"
 
+struct GameState {
+    Entity *player;
+    Entity *platforms;
+    Entity *target;
+    bool gameEnd = false;
+};
+
 Entity::Entity()
 {
     position = glm::vec3(0);
@@ -11,6 +18,14 @@ Entity::Entity()
     modelMatrix = glm::mat4(1.0f);
 }
 
+void Entity::reset() {
+    
+    velocity = glm::vec3(0);
+    acceleration = glm::vec3(0);
+    
+}
+
+
 bool Entity::CheckCollision(Entity *other) {
     
     if (isActive == false || other->isActive == false) return false;
@@ -18,13 +33,19 @@ bool Entity::CheckCollision(Entity *other) {
     float x_dist = fabs(position.x - other->position.x) - (width + other->width) / 2.0f;
     float y_dist = fabs(position.y - other->position.y) - (height + other->height) / 2.0f;
     
-    if (x_dist < 0 && y_dist < 0) return true;
+    if (x_dist < 0 && y_dist < 0) {
+        if (other->entityType == PLATFORM) {
+            alive = false;
+        }
+        return true;
+        
+    }
     
     return false;
     
 }
 
- void Entity::CheckCollisionsY(Entity *objects, int objectCount)
+ void Entity::CheckCollisionsY(Entity *objects, int objectCount, GameState *state)
 {
     for (int i = 0; i < objectCount; i++)
     {
@@ -36,20 +57,23 @@ bool Entity::CheckCollision(Entity *other) {
             if (velocity.y > 0) {
                 position.y -= penetrationY;
                 velocity.y = 0;
-                velocity.x = 0; // check later
                 collidedTop = true;
             }
             else if (velocity.y < 0) {
                 position.y += penetrationY;
                 velocity.y = 0;
-                velocity.x = 0; // check later
                 collidedBottom = true;
             }
+            if (object->entityType == PLATFORM) {
+                alive = false;
+            }
+            state->gameEnd = true;
+            reset();
         }
     }
 }
 
-void Entity::CheckCollisionsX(Entity *objects, int objectCount)
+void Entity::CheckCollisionsX(Entity *objects, int objectCount, GameState *state)
 {
     for (int i = 0; i < objectCount; i++)
     {
@@ -68,13 +92,17 @@ void Entity::CheckCollisionsX(Entity *objects, int objectCount)
                 velocity.x = 0;
                 collidedLeft = true;
             }
+            state->gameEnd = true;
+            reset();
         }
     }
 }
 
-void Entity::Update(float deltaTime, Entity *platforms, int platformCount)
+
+void Entity::Update(float deltaTime, Entity *platforms, int platformCount, Entity *targets, int targetCount, GameState *state)
 {
     
+    if (state->gameEnd) return;
     if (isActive == false) return;
     
     collidedTop = false;
@@ -103,11 +131,16 @@ void Entity::Update(float deltaTime, Entity *platforms, int platformCount)
     //std::cout << "acc: " << acceleration.x << '\n';
     velocity += acceleration * deltaTime;
     //std::cout << "velo: " << velocity.x << '\n';
+    
+     // exit update if gameEnd is true
     position.y += velocity.y * deltaTime; // Move on Y
-    CheckCollisionsY(platforms, platformCount);// Fix if needed
+    
+    CheckCollisionsY(platforms, platformCount, state);// Fix if needed
     
     position.x += velocity.x * deltaTime; // Move on X
-    CheckCollisionsX(platforms, platformCount);// Fix if needed
+    CheckCollisionsX(platforms, platformCount, state);// Fix if needed
+    
+    //std::cout << state->gameEnd << '\n';
     
     modelMatrix = glm::mat4(1.0f);
     modelMatrix = glm::translate(modelMatrix, position);
@@ -167,3 +200,4 @@ void Entity::Render(ShaderProgram *program) {
     glDisableVertexAttribArray(program->positionAttribute);
     glDisableVertexAttribArray(program->texCoordAttribute);
 }
+

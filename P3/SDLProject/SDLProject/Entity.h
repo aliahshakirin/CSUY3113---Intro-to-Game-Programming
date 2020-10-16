@@ -11,6 +11,10 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "ShaderProgram.h"
 
+
+enum EntityType {PLAYER, PLATFORM, TARGET };
+struct GameState;
+
 class Entity {
 public:
     glm::vec3 position;
@@ -26,7 +30,11 @@ public:
     bool leftAcc = false;
     float jumpPower = 0;
     
+    bool alive = true;
+    
     GLuint textureID;
+    
+    EntityType entityType;
     
     glm::mat4 modelMatrix;
     
@@ -52,9 +60,12 @@ public:
     Entity();
 
     bool CheckCollision(Entity *other);
-    void CheckCollisionsY(Entity *objects, int objectCount);
-    void CheckCollisionsX(Entity *objects, int objectCount);
-    void Update(float deltaTime, Entity *platforms, int platformCount);
+    void CheckCollisionsY(Entity *objects, int objectCount, GameState *state);
+    void CheckCollisionsX(Entity *objects, int objectCount, GameState *state);
+    void Update(float deltaTime, Entity *platforms, int platformCount, Entity *targets, int targetCount, GameState *state);
     void Render(ShaderProgram *program);
     void DrawSpriteFromTextureAtlas(ShaderProgram *program, GLuint textureID, int index);
+    void reset();
 };
+
+

@@ -10,6 +10,8 @@
 		4F2D9B90252AB921009E88BE /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F2D9B8E252AB921009E88BE /* Entity.cpp */; };
 		4F34B7162532A7BF0022FA74 /* playerShip3_green.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F34B7152532A7A20022FA74 /* playerShip3_green.png */; };
 		4F34B7182532BB880022FA74 /* platformPack_tile041.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F34B7172532BB830022FA74 /* platformPack_tile041.png */; };
+		4FF18DCE2539318700DBDDC3 /* font1.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FF18DCD2539317900DBDDC3 /* font1.png */; };
+		4FF18DD025393B5F00DBDDC3 /* platformIndustrial_064.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FF18DCF25393B5500DBDDC3 /* platformIndustrial_064.png */; };
 		DBDF1B532323DE3F007CECB1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBDF1B522323DE3F007CECB1 /* main.cpp */; };
 		DBDF1B5E2323DE8D007CECB1 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBDF1B5D2323DE8D007CECB1 /* ShaderProgram.cpp */; };
 		DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */ = {isa = PBXBuildFile; fileRef = DBDF1B5C2323DE8D007CECB1 /* shaders */; };
@@ -27,9 +29,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				4FF18DCE2539318700DBDDC3 /* font1.png in CopyFiles */,
 				DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */,
 				4F34B7162532A7BF0022FA74 /* playerShip3_green.png in CopyFiles */,
 				4F34B7182532BB880022FA74 /* platformPack_tile041.png in CopyFiles */,
+				4FF18DD025393B5F00DBDDC3 /* platformIndustrial_064.png in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +44,8 @@
 		4F2D9B8F252AB921009E88BE /* Entity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
 		4F34B7152532A7A20022FA74 /* playerShip3_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playerShip3_green.png; sourceTree = "<group>"; };
 		4F34B7172532BB830022FA74 /* platformPack_tile041.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = platformPack_tile041.png; sourceTree = "<group>"; };
+		4FF18DCD2539317900DBDDC3 /* font1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = font1.png; sourceTree = "<group>"; };
+		4FF18DCF25393B5500DBDDC3 /* platformIndustrial_064.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = platformIndustrial_064.png; sourceTree = "<group>"; };
 		DBDF1B4F2323DE3F007CECB1 /* SDLProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDLProject; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBDF1B522323DE3F007CECB1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DBDF1B592323DE8D007CECB1 /* ShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderProgram.h; sourceTree = "<group>"; };
@@ -90,6 +96,8 @@
 		DBDF1B512323DE3F007CECB1 /* SDLProject */ = {
 			isa = PBXGroup;
 			children = (
+				4FF18DCF25393B5500DBDDC3 /* platformIndustrial_064.png */,
+				4FF18DCD2539317900DBDDC3 /* font1.png */,
 				4F34B7172532BB830022FA74 /* platformPack_tile041.png */,
 				4F34B7152532A7A20022FA74 /* playerShip3_green.png */,
 				DBDF1B5B2323DE8D007CECB1 /* glm */,
