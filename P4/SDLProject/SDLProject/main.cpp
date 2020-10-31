@@ -13,6 +13,7 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#include <vector>
 
 #include "Entity.h"
 //26
@@ -23,7 +24,6 @@ struct GameState {
     Entity *player;
     Entity *platforms;
     Entity *enemies;
-    Entity *checkpoint;
 };
 
 GameState state;
@@ -33,6 +33,9 @@ bool gameIsRunning = true;
 
 ShaderProgram program;
 glm::mat4 viewMatrix, modelMatrix, projectionMatrix;
+GLuint fontTextureID;
+
+int enemyLeft = 0;
 
 GLuint LoadTexture(const char* filePath) {
     int w, h, n;
@@ -53,6 +56,60 @@ GLuint LoadTexture(const char* filePath) {
     
     stbi_image_free(image);
     return textureID;
+}
+
+void DrawText(ShaderProgram *program, GLuint fontTextureID, std::string text, float size, float spacing, glm::vec3 position) {
+    
+    float width = 1.0f / 16.0f;
+    float height = 1.0f / 16.0f;
+    
+    std::vector<float> vertices;
+    std::vector<float> texCoords;
+    
+    for (int i = 0; i <text.size(); i++) {
+        
+        int index = (int)text[i];
+        float offset = (size + spacing) * i;
+        
+        float u = (float) (index % 16) / 16.0f;
+        float v = (float) (index / 16) / 16.0f;
+        
+        vertices.insert(vertices.end(), {
+            offset + (-0.5f * size), 0.5f * size,
+            offset + (-0.5f * size), -0.5f * size,
+            offset + (0.5f * size), 0.5f * size,
+            offset + (0.5f * size), -0.5f * size,
+            offset + (0.5f * size), 0.5f * size,
+            offset + (-0.5f * size), -0.5f * size,
+        });
+        
+        texCoords.insert(texCoords.end(), {
+            u, v,
+            u, v + height,
+            u + width, v,
+            u + width, v + height,
+            u + width, v,
+            u, v + height,
+        });
+    }
+    
+    glm::mat4 modelMatrix = glm::mat4(1.0f);
+    modelMatrix = glm::translate(modelMatrix,position);
+    program->SetModelMatrix(modelMatrix);
+    
+    glUseProgram(program->programID);
+    
+    glVertexAttribPointer(program->positionAttribute, 2, GL_FLOAT, false, 0, vertices.data());
+    glEnableVertexAttribArray(program->positionAttribute);
+    
+    glVertexAttribPointer(program->texCoordAttribute, 2, GL_FLOAT, false, 0, texCoords.data());
+    glEnableVertexAttribArray(program->texCoordAttribute);
+    
+    glBindTexture(GL_TEXTURE_2D, fontTextureID);
+    glDrawArrays(GL_TRIANGLES, 0, (int)(text.size() * 6));
+    
+    glDisableVertexAttribArray(program->positionAttribute);
+    glDisableVertexAttribArray(program->texCoordAttribute);
 }
 
 
@@ -88,6 +145,7 @@ void Initialize() {
     // Initialize Game Objects
     
     // Initialize Player
+    fontTextureID = LoadTexture("font1.png");
     state.player = new Entity();
     state.player->entityType = PLAYER;
     state.player->position = glm::vec3(-4, -1.25, 0);
@@ -112,21 +170,6 @@ void Initialize() {
     state.player->width = 0.6f;;
     
     state.player->jumpPower = 6.7f;
-    
-    state.checkpoint = new Entity();
-    state.checkpoint->textureID = LoadTexture("checkpoint.png");
-    state.checkpoint->position = glm::vec3(4.5, -1.85, 0);
-    state.checkpoint->animeIdle = new int[10] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    
-    state.checkpoint->animIndices = state.checkpoint->animeIdle;
-    state.checkpoint->animFrames = 10;
-    state.checkpoint->animIndex = 0;
-    state.checkpoint->animTime = 0;
-    state.checkpoint->animCols = 10;
-    state.checkpoint->animRows = 1;
-
-    //state.door->size = glm::vec3(3.0f,3.0f,1.0f);
-    state.checkpoint->Update(0, NULL, NULL, 0, NULL, 0);
     
     state.platforms = new Entity[PLATFORM_COUNT];
     
@@ -298,13 +341,28 @@ void Render() {
         state.platforms[i].Render(&program);
     }
     
-    state.checkpoint->Render(&program);
-    
     for (int i = 0; i < ENEMY_COUNT; i++) {
         state.enemies[i].Render(&program);
     }
 
     state.player->Render(&program);
+    
+    if (!state.player->isActive) {
+        DrawText(&program, fontTextureID, "You Lose!", 0.9, -0.5f, glm::vec3(-1.75,0,0));
+    }
+    
+    for (int i = 0; i < ENEMY_COUNT; i++) {
+        if (state.enemies[i].isActive) {
+            enemyLeft++;
+        }
+    }
+    
+    if (enemyLeft == 0) {
+        DrawText(&program, fontTextureID, "You Win!", 0.9, -0.5f, glm::vec3(-1.50,0,0));
+    }
+    
+    enemyLeft = 0;
+
     
     SDL_GL_SwapWindow(displayWindow);
 }
