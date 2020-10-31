@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4F112040252E6D00008310B8 /* platformPack_tile001.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F11203F252E6CDF008310B8 /* platformPack_tile001.png */; };
-		4F26835C252A72800000F959 /* george_0.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F26835B252A72630000F959 /* george_0.png */; };
-		4F2D5A882511941000D64D43 /* ctg.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F2D5A87251193E600D64D43 /* ctg.png */; };
 		4F2D9B90252AB921009E88BE /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F2D9B8E252AB921009E88BE /* Entity.cpp */; };
+		4F934087254A21B500BA2635 /* terrain_top_center.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F934086254A21A000BA2635 /* terrain_top_center.png */; };
+		4F934089254A29AB00BA2635 /* terrain_center.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F934088254A29A600BA2635 /* terrain_center.png */; };
+		4F93408B254A2EE300BA2635 /* Soldier.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F93408A254A2ECE00BA2635 /* Soldier.png */; };
+		4F934093254A3A6600BA2635 /* checkpoint.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F934092254A396900BA2635 /* checkpoint.png */; };
+		4FCC5E2E254CF455004A0D99 /* terrain_platform_center.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FCC5E2D254CF44E004A0D99 /* terrain_platform_center.png */; };
 		4FF559EE25491C300057C1D1 /* Female.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FF559ED25491C2B0057C1D1 /* Female.png */; };
 		DBDF1B532323DE3F007CECB1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBDF1B522323DE3F007CECB1 /* main.cpp */; };
 		DBDF1B5E2323DE8D007CECB1 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBDF1B5D2323DE8D007CECB1 /* ShaderProgram.cpp */; };
@@ -30,21 +32,25 @@
 			dstSubfolderSpec = 6;
 			files = (
 				DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */,
-				4F2D5A882511941000D64D43 /* ctg.png in CopyFiles */,
-				4F26835C252A72800000F959 /* george_0.png in CopyFiles */,
-				4F112040252E6D00008310B8 /* platformPack_tile001.png in CopyFiles */,
 				4FF559EE25491C300057C1D1 /* Female.png in CopyFiles */,
+				4F934087254A21B500BA2635 /* terrain_top_center.png in CopyFiles */,
+				4F934089254A29AB00BA2635 /* terrain_center.png in CopyFiles */,
+				4F93408B254A2EE300BA2635 /* Soldier.png in CopyFiles */,
+				4F934093254A3A6600BA2635 /* checkpoint.png in CopyFiles */,
+				4FCC5E2E254CF455004A0D99 /* terrain_platform_center.png in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4F11203F252E6CDF008310B8 /* platformPack_tile001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = platformPack_tile001.png; sourceTree = "<group>"; };
-		4F26835B252A72630000F959 /* george_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = george_0.png; sourceTree = "<group>"; };
-		4F2D5A87251193E600D64D43 /* ctg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ctg.png; sourceTree = "<group>"; };
 		4F2D9B8E252AB921009E88BE /* Entity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Entity.cpp; sourceTree = "<group>"; };
 		4F2D9B8F252AB921009E88BE /* Entity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
+		4F934086254A21A000BA2635 /* terrain_top_center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = terrain_top_center.png; sourceTree = "<group>"; };
+		4F934088254A29A600BA2635 /* terrain_center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = terrain_center.png; sourceTree = "<group>"; };
+		4F93408A254A2ECE00BA2635 /* Soldier.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Soldier.png; sourceTree = "<group>"; };
+		4F934092254A396900BA2635 /* checkpoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkpoint.png; sourceTree = "<group>"; };
+		4FCC5E2D254CF44E004A0D99 /* terrain_platform_center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = terrain_platform_center.png; sourceTree = "<group>"; };
 		4FF559ED25491C2B0057C1D1 /* Female.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Female.png; sourceTree = "<group>"; };
 		DBDF1B4F2323DE3F007CECB1 /* SDLProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDLProject; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBDF1B522323DE3F007CECB1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -96,10 +102,12 @@
 		DBDF1B512323DE3F007CECB1 /* SDLProject */ = {
 			isa = PBXGroup;
 			children = (
+				4FCC5E2D254CF44E004A0D99 /* terrain_platform_center.png */,
+				4F934092254A396900BA2635 /* checkpoint.png */,
+				4F93408A254A2ECE00BA2635 /* Soldier.png */,
+				4F934088254A29A600BA2635 /* terrain_center.png */,
+				4F934086254A21A000BA2635 /* terrain_top_center.png */,
 				4FF559ED25491C2B0057C1D1 /* Female.png */,
-				4F11203F252E6CDF008310B8 /* platformPack_tile001.png */,
-				4F26835B252A72630000F959 /* george_0.png */,
-				4F2D5A87251193E600D64D43 /* ctg.png */,
 				DBDF1B5B2323DE8D007CECB1 /* glm */,
 				DBDF1B5D2323DE8D007CECB1 /* ShaderProgram.cpp */,
 				DBDF1B592323DE8D007CECB1 /* ShaderProgram.h */,

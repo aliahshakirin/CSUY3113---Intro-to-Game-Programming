@@ -15,14 +15,15 @@
 #include "stb_image.h"
 
 #include "Entity.h"
-
-#define PLATFORM_COUNT 11
-#define ENEMY_COUNT 1
+//26
+#define PLATFORM_COUNT 30
+#define ENEMY_COUNT 3
 
 struct GameState {
     Entity *player;
     Entity *platforms;
     Entity *enemies;
+    Entity *checkpoint;
 };
 
 GameState state;
@@ -89,7 +90,7 @@ void Initialize() {
     // Initialize Player
     state.player = new Entity();
     state.player->entityType = PLAYER;
-    state.player->position = glm::vec3(-4, -1, 0);
+    state.player->position = glm::vec3(-4, -1.25, 0);
     state.player->movement = glm::vec3(0);
     state.player->acceleration = glm::vec3(0,-9.81f,0);
     state.player->speed = 1.5f;
@@ -100,41 +101,112 @@ void Initialize() {
     state.player->animUp = new int[3] {9, 10, 11};
     state.player->animDown = new int[3] {0, 1 , 2};
 
-    state.player->animIndices = state.player->animDown;
+    state.player->animIndices = state.player->animRight;
     state.player->animFrames = 3;
     state.player->animIndex = 0;
     state.player->animTime = 0;
-    state.player->animCols = 4;
-    state.player->animRows = 3;
+    state.player->animCols = 3;
+    state.player->animRows = 4;
     
     state.player->height = 1.0f;
-    state.player->width = 1.0f;
+    state.player->width = 0.6f;;
     
-    state.player->jumpPower = 5.0f;
+    state.player->jumpPower = 6.7f;
+    
+    state.checkpoint = new Entity();
+    state.checkpoint->textureID = LoadTexture("checkpoint.png");
+    state.checkpoint->position = glm::vec3(4.5, -1.85, 0);
+    state.checkpoint->animeIdle = new int[10] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    
+    state.checkpoint->animIndices = state.checkpoint->animeIdle;
+    state.checkpoint->animFrames = 10;
+    state.checkpoint->animIndex = 0;
+    state.checkpoint->animTime = 0;
+    state.checkpoint->animCols = 10;
+    state.checkpoint->animRows = 1;
+
+    //state.door->size = glm::vec3(3.0f,3.0f,1.0f);
+    state.checkpoint->Update(0, NULL, NULL, 0, NULL, 0);
     
     state.platforms = new Entity[PLATFORM_COUNT];
     
-    GLuint platformTextureID = LoadTexture("platformPack_tile001.png");
+    GLuint topTerrainTextureID = LoadTexture("terrain_top_center.png");
+    GLuint terrainTextureID = LoadTexture("terrain_center.png");
+    GLuint platformTextureID = LoadTexture("terrain_platform_center.png");
     
-    for (int i = 0; i < PLATFORM_COUNT; i++) {
+    for (int i = 0; i < 11; i++) {
+        state.platforms[i].entityType = PLATFORM;
+        state.platforms[i].textureID = topTerrainTextureID;
+        state.platforms[i].position = glm::vec3(-5+i,-2.75f,0);
+    }
+    
+    
+    for (int i = 11; i < 23; i++) {
+        state.platforms[i].entityType = PLATFORM;
+        state.platforms[i].textureID = terrainTextureID;
+        state.platforms[i].position = glm::vec3(-5+(i-12),-3.75f,0);
+    }
+    
+    for (int i = 23; i < 26; i++) {
         state.platforms[i].entityType = PLATFORM;
         state.platforms[i].textureID = platformTextureID;
-        state.platforms[i].position = glm::vec3(-5+i,-3.25f,0);
+        state.platforms[i].position = glm::vec3(-5+(i-23),1,0);
+    }
+    
+    for (int i = 26; i < PLATFORM_COUNT; i++) {
+        state.platforms[i].entityType = PLATFORM;
+        state.platforms[i].textureID = platformTextureID;
+        state.platforms[i].position = glm::vec3(-0.70+(i-26),-0.7,0);
     }
     
     for(int i =0; i < PLATFORM_COUNT; i++) {
-        state.platforms[i].Update(0, NULL, NULL, 0);
+        state.platforms[i].Update(0, NULL, NULL, 0, NULL, 0);
     }
     
     state.enemies = new Entity[ENEMY_COUNT];
-    GLuint enemyTextureID = LoadTexture("ctg.png");
+    GLuint enemyTextureID = LoadTexture("Soldier.png");
     
-    state.enemies[0].entityType = ENEMY;
-    state.enemies[0].textureID = enemyTextureID;
-    state.enemies[0].position = glm::vec3(4, -2.25, 0);
-    state.enemies[0].speed = 1;
+    for (int i = 0; i < ENEMY_COUNT; i++) {
+        state.enemies[i].width = 0.5f;
+        //state.enemies[i].height = 1.0f;
+        state.enemies[i].animRight = new int[3] {6, 7, 8};
+        state.enemies[i].animLeft = new int[3] {3, 4, 5};
+        state.enemies[i].animUp = new int[3] {9, 10, 11};
+        state.enemies[i].animDown = new int[3] {0, 1 , 2};
+        
+        state.enemies[i].animFrames = 3;
+        state.enemies[i].animIndex = 0;
+        state.enemies[i].animTime = 0;
+        state.enemies[i].animCols = 3;
+        state.enemies[i].animRows = 4;
+        
+        state.enemies[i].entityType = ENEMY;
+        state.enemies[i].textureID = enemyTextureID;
+        
+        state.enemies[i].speed = 1;
+    
+    }
+    
+    
+    state.enemies[0].animIndices = state.player->animLeft;
+    state.enemies[1].animIndices = state.player->animRight;
+    state.enemies[2].animIndices = state.player->animLeft;
+    
+    state.enemies[0].position = glm::vec3(3.5, -1.75, 0);
+    state.enemies[1].position = glm::vec3(-3.75, 2, 0);
+    state.enemies[1].acceleration = glm::vec3(0,-9.81f,0);
+    state.enemies[2].position = glm::vec3(1, 0.3, 0);
+    
     state.enemies[0].aiType = WAITANDGO;
     state.enemies[0].aiState = IDLE;
+    
+    state.enemies[1].aiType = JUMPER;
+    //state.enemies[1].movement = glm::vec3(1,0,0);
+    //state.enemies[1].aiState = JUMPING;
+    
+    state.enemies[2].aiType = WALKER;
+    state.enemies[2].movement = glm::vec3(-1,0,0);
+    //state.enemies[2].aiState = WALKING;
     
 }
 
@@ -206,10 +278,11 @@ void Update() {
     
     while (deltaTime >= FIXED_TIMESTEP) {
         // Update. Notice it's FIXED_TIMESTEP. Not deltaTime
-        state.player->Update(FIXED_TIMESTEP, state.player, state.platforms, PLATFORM_COUNT);
+        
+        state.player->Update(FIXED_TIMESTEP, state.player, state.platforms, PLATFORM_COUNT, state.enemies, ENEMY_COUNT);
         
         for (int i = 0; i < ENEMY_COUNT; i++) {
-            state.enemies[i].Update(FIXED_TIMESTEP, state.player, state.platforms, PLATFORM_COUNT);
+            state.enemies[i].Update(FIXED_TIMESTEP, state.player, state.platforms, PLATFORM_COUNT, state.enemies, ENEMY_COUNT);
         }
         deltaTime -= FIXED_TIMESTEP;
     }
@@ -225,9 +298,12 @@ void Render() {
         state.platforms[i].Render(&program);
     }
     
+    state.checkpoint->Render(&program);
+    
     for (int i = 0; i < ENEMY_COUNT; i++) {
         state.enemies[i].Render(&program);
     }
+
     state.player->Render(&program);
     
     SDL_GL_SwapWindow(displayWindow);
