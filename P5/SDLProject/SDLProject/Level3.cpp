@@ -10,8 +10,8 @@ GLuint lose3TextureID;
 unsigned int level3_data[] = {
     3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
     3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
-    3, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 3,
-    3, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3,
+    3, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 3,
+    3, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 3,
     3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 3,
     3, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3,
     3, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3,
@@ -44,7 +44,6 @@ void Level3::Initialize() {
     state.player = new Entity();
     state.player->entityType = PLAYER;
     state.player->lives = l3_lives;
-    std::cout << *l3_lives << '\n';
     state.player->position = glm::vec3(2, 0, 0);
     state.player->movement = glm::vec3(0);
     state.player->acceleration = glm::vec3(0,-9.81f,0);
@@ -73,7 +72,7 @@ void Level3::Initialize() {
        
     state.enemies[0].entityType = ENEMY;
     state.enemies[0].textureID = enemyTextureID;
-    state.enemies[0].position = glm::vec3(6, -2, 0);
+    state.enemies[0].position = glm::vec3(9, -1, 0);
     state.enemies[0].speed = 1;
     state.enemies[0].aiType = WAITANDGO;
     state.enemies[0].aiState = IDLE;
