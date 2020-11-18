@@ -111,6 +111,11 @@ void Level2::Render(ShaderProgram *program) {
     state.player->Render(program);
     
     if (*l2_lives == 0) {
-        Util::DrawText(program, lose2TextureID, "You Lose", 0.9, 0.0f, glm::vec3(state.player->position.x - 4.5,-4,0));
+        if (state.player->position.x > 7) {
+            Util::DrawText(program, lose2TextureID, "You Lose", 0.9, 0.0f, glm::vec3(state.player->position.x - 4.5,-4,0));
+        } else {
+            Util::DrawText(program, lose2TextureID, "You Lose", 0.9, 0.0f, glm::vec3(state.player->position.x - 3,-4,0));
+        }
+        
     }
 }

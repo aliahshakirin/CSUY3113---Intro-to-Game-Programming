@@ -92,7 +92,7 @@ void Level3::Update(float deltaTime) {
     
     state.player->Update(deltaTime, state.player, state.enemies, LEVEL1_ENEMY_COUNT, state.map);
     
-    if ((*l3_lives) < prevLives && (*l3_lives) != 0 ) {
+    if ((*l3_lives) < prevLives && (*l3_lives) != 0 && state.enemies[0].isActive == true) {
         //std::cout << *l1_lives << '\n';
         state.nextScene = 3;
     }
@@ -109,13 +109,19 @@ void Level3::Render(ShaderProgram *program) {
     }
     state.player->Render(program);
     
-    if (*l3_lives == 0) {
-        Util::DrawText(program, lose3TextureID, "You Lose", 0.9, 0.0f, glm::vec3(state.player->position.x - 4.5,-4,0));
+    if (*l3_lives == 0 && state.enemies[0].isActive == true) {
+        if (state.player->position.x > 7) {
+            Util::DrawText(program, lose3TextureID, "You Lose", 0.9, 0.0f, glm::vec3(state.player->position.x - 4.5,-4,0));
+        } else {
+            Util::DrawText(program, lose3TextureID, "You Lose", 0.9, 0.0f, glm::vec3(state.player->position.x - 2,-4,0));
+        }
     }
     
     for (int i = 0; i < LEVEL1_ENEMY_COUNT; i++) {
         if (state.enemies[i].isActive == false) { //only for 1 enemy
             Util::DrawText(program, lose3TextureID, "You Win", 0.9, 0.0f, glm::vec3(5, -4 ,0));
+            
         }
+        
     }
 }

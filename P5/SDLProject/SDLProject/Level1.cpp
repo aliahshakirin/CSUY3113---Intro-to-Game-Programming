@@ -89,6 +89,7 @@ void Level1::Update(float deltaTime) {
     
     state.player->Update(deltaTime, state.player, state.enemies, LEVEL1_ENEMY_COUNT, state.map);
 
+    //std::cout << state.player->position.x << '\n';
     
     if ((*l1_lives) < prevLives && (*l1_lives) != 0 ) {
         //std::cout << *l1_lives << '\n';

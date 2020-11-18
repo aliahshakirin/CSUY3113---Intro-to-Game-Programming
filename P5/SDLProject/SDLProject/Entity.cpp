@@ -270,6 +270,9 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
         if (*lives > 0) {
             --(*lives);
         }
+        if (*lives == 0) {
+            isActive = false;
+        }
     }
     
     modelMatrix = glm::mat4(1.0f);
