@@ -77,7 +77,6 @@ void Level3::Initialize() {
     state.enemies[0].speed = 1;
     state.enemies[0].aiType = WAITANDGO;
     state.enemies[0].aiState = IDLE;
-    //state.enemies[0].isActive = false;
     
     
 }
@@ -93,7 +92,6 @@ void Level3::Update(float deltaTime) {
     state.player->Update(deltaTime, state.player, state.enemies, LEVEL1_ENEMY_COUNT, state.map);
     
     if ((*l3_lives) < prevLives && (*l3_lives) != 0 && state.enemies[0].isActive == true) {
-        //std::cout << *l1_lives << '\n';
         state.nextScene = 3;
     }
     

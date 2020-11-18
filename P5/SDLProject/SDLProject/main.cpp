@@ -80,7 +80,7 @@ void Initialize() {
     sceneList[1] = new Level1(&lives);
     sceneList[2] = new Level2(&lives);
     sceneList[3] = new Level3(&lives);
-    SwitchToScene(sceneList[3]); // change later
+    SwitchToScene(sceneList[0]); // change later
     
 }
 
