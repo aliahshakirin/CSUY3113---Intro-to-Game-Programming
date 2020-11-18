@@ -25,7 +25,6 @@ struct GameState {
     Entity *enemies;
     Background *background;
     int nextScene;
-    int *lives;
 };
 
 class Scene {

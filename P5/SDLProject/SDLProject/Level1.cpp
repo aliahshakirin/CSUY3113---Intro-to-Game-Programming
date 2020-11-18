@@ -5,6 +5,8 @@
 
 #define LEVEL1_ENEMY_COUNT 1
 
+GLuint loseTextureID;
+
 unsigned int level1_data[] = {
     3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -16,6 +18,10 @@ unsigned int level1_data[] = {
     3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
 };
 
+Level1::Level1(int *lives) {
+    l1_lives = lives;
+}
+
 void Level1::Initialize() {
     
     state.nextScene = -1;
@@ -24,21 +30,18 @@ void Level1::Initialize() {
     state.background = new Background();
     state.background->textureID = Util::LoadTexture("bg_star.png");
     state.background->position = glm::vec3(7, -1, 0);
-
     
     GLuint mapTextureID = Util::LoadTexture("tileset.png");
     state.map = new Map(LEVEL1_WIDTH, LEVEL1_HEIGHT, level1_data, mapTextureID, 1.0f, 4, 1);
     
-    
+    loseTextureID = Util::LoadTexture("pixel_font.png");
     // Initialize Game Objects
     
     // Initialize Player
     // can put this somewhere else as u will make this a lot of time every level
     state.player = new Entity();
     state.player->entityType = PLAYER;
-    
-    state.player->lives = 3;
-    state.lives = &(state.player->lives);
+    state.player->lives = l1_lives;
     
     state.player->position = glm::vec3(3, 0, 0);
     state.player->movement = glm::vec3(0);
@@ -82,18 +85,22 @@ void Level1::Update(float deltaTime) {
         state.enemies[i].Update(deltaTime, state.player, state.enemies, LEVEL1_ENEMY_COUNT, state.map);
     }
     
-    int prevLive = *state.lives;
+    int prevLives = *l1_lives;
     
     state.player->Update(deltaTime, state.player, state.enemies, LEVEL1_ENEMY_COUNT, state.map);
 
-    if (state.player->lives < prevLive) {
+    
+    if ((*l1_lives) < prevLives && (*l1_lives) != 0 ) {
+        //std::cout << *l1_lives << '\n';
         state.nextScene = 1;
-
     }
     
-    if (state.player->position.x >= 12) { // change when collide with door or all enemy killed
-        state.nextScene = 2;
+    for (int i = 0; i < LEVEL1_ENEMY_COUNT; i++) {
+        if (state.enemies[i].isActive == false) { //only for 1 enemy
+            state.nextScene = 2;
+        }
     }
+    
 }
 
 void Level1::Render(ShaderProgram *program) {
@@ -103,4 +110,9 @@ void Level1::Render(ShaderProgram *program) {
         state.enemies[i].Render(program);
     }
     state.player->Render(program);
+
+    if (*l1_lives == 0) {
+        Util::DrawText(program, loseTextureID, "You Lose", 0.9, 0.0f, glm::vec3(5.5,-4,0));
+    }
+     
 }

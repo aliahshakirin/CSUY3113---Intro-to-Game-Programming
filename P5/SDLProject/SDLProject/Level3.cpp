@@ -5,16 +5,22 @@
 
 #define LEVEL1_ENEMY_COUNT 1
 
+GLuint lose3TextureID;
+
 unsigned int level3_data[] = {
-    3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    3, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0,
-    3, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0,
-    3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
-    3, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2,
-    3, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2,
-    3, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2
+    3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+    3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+    3, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 3,
+    3, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3,
+    3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 3,
+    3, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3,
+    3, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3,
+    3, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3
 };
+
+Level3::Level3(int *lives) {
+    l3_lives = lives;
+}
 
 void Level3::Initialize() {
     
@@ -29,6 +35,7 @@ void Level3::Initialize() {
     GLuint mapTextureID = Util::LoadTexture("tileset.png");
     state.map = new Map(LEVEL1_WIDTH, LEVEL1_HEIGHT, level3_data, mapTextureID, 1.0f, 4, 1);
     
+    lose3TextureID = Util::LoadTexture("pixel_font.png");
     
     // Initialize Game Objects
     
@@ -36,6 +43,8 @@ void Level3::Initialize() {
     // can put this somewhere else as u will make this a lot of time every level
     state.player = new Entity();
     state.player->entityType = PLAYER;
+    state.player->lives = l3_lives;
+    std::cout << *l3_lives << '\n';
     state.player->position = glm::vec3(2, 0, 0);
     state.player->movement = glm::vec3(0);
     state.player->acceleration = glm::vec3(0,-9.81f,0);
@@ -75,15 +84,21 @@ void Level3::Initialize() {
 void Level3::Update(float deltaTime) {
     state.background->Update(deltaTime);
     
-    state.player->Update(deltaTime, state.player, state.enemies, LEVEL1_ENEMY_COUNT, state.map);
+    int prevLives = *l3_lives;
     
     for (int i = 0; i < LEVEL1_ENEMY_COUNT; i++) {
-        state.enemies[i].Update(deltaTime, state.player, state.enemies, LEVEL1_ENEMY_COUNT, state.map);
+           state.enemies[i].Update(deltaTime, state.player, state.enemies, LEVEL1_ENEMY_COUNT, state.map);
+       }
+    
+    state.player->Update(deltaTime, state.player, state.enemies, LEVEL1_ENEMY_COUNT, state.map);
+    
+    if ((*l3_lives) < prevLives && (*l3_lives) != 0 ) {
+        //std::cout << *l1_lives << '\n';
+        state.nextScene = 3;
     }
     
-    if (state.player->position.x >= 12) { // change when collide with door or all enemy killed
-        state.nextScene = 2;
-    }
+   
+    
 }
 
 void Level3::Render(ShaderProgram *program) {
@@ -93,4 +108,14 @@ void Level3::Render(ShaderProgram *program) {
         state.enemies[i].Render(program);
     }
     state.player->Render(program);
+    
+    if (*l3_lives == 0) {
+        Util::DrawText(program, lose3TextureID, "You Lose", 0.9, 0.0f, glm::vec3(state.player->position.x - 4.5,-4,0));
+    }
+    
+    for (int i = 0; i < LEVEL1_ENEMY_COUNT; i++) {
+        if (state.enemies[i].isActive == false) { //only for 1 enemy
+            Util::DrawText(program, lose3TextureID, "You Win", 0.9, 0.0f, glm::vec3(5, -4 ,0));
+        }
+    }
 }

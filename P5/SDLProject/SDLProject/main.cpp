@@ -31,6 +31,9 @@ Scene *currentScene;
 Scene *sceneList[4];
 
 Mix_Music *music;
+Mix_Chunk *bounce;
+
+int lives = 3;
 
 void SwitchToScene(Scene *scene) {
     currentScene = scene;
@@ -56,6 +59,8 @@ void Initialize() {
     Mix_PlayMusic(music,-1);
     Mix_VolumeMusic(MIX_MAX_VOLUME / 4);
     
+    bounce = Mix_LoadWAV("bounce.wav");
+    
     viewMatrix = glm::mat4(1.0f);
     modelMatrix = glm::mat4(1.0f);
     projectionMatrix = glm::ortho(-5.0f, 5.0f, -3.75f, 3.75f, -1.0f, 1.0f);
@@ -72,9 +77,9 @@ void Initialize() {
     
     
     sceneList[0] = new Menu();
-    sceneList[1] = new Level1();
-    sceneList[2] = new Level2();
-    sceneList[3] = new Level3();
+    sceneList[1] = new Level1(&lives);
+    sceneList[2] = new Level2(&lives);
+    sceneList[3] = new Level3(&lives);
     SwitchToScene(sceneList[0]); // change later
     
 }
@@ -107,6 +112,7 @@ void ProcessInput() {
                         if (currentScene->state.mode == MAIN_MENU) break;
                         if (currentScene->state.player->collidedBottom) {
                             currentScene->state.player->jump = true;
+                            Mix_PlayChannel(-1,bounce,0);
                         }
                         break;
                     case SDLK_RETURN:

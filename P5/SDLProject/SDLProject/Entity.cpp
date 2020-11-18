@@ -84,8 +84,13 @@ void Entity::CheckCollisionsX(Entity *objects, int objectCount)
             }
             
             if (object->entityType == ENEMY && (collidedLeft || collidedRight)) {
-                if (entityType == PLAYER && lives > 0) {
-                    lives--;
+                if (*lives > 0) {
+                    --(*lives);
+                }
+                //std::cout << *lives << '\n';
+                
+                if (*lives == 0) {
+                    isActive = false;
                 }
             }
         
@@ -260,6 +265,12 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
     position.x += velocity.x * deltaTime;
     CheckCollisionsX(map);
     CheckCollisionsX(objects, objectCount);
+    
+    if (position.y < -15) {
+        if (*lives > 0) {
+            --(*lives);
+        }
+    }
     
     modelMatrix = glm::mat4(1.0f);
     modelMatrix = glm::translate(modelMatrix, position);

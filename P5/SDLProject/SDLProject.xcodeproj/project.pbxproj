@@ -21,6 +21,7 @@
 		4F1A8683255F8AD800D7EA42 /* Background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F1A8681255F8AD800D7EA42 /* Background.cpp */; };
 		4F1A8685255F8CB900D7EA42 /* bg_clouds.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F1A8684255F8CB500D7EA42 /* bg_clouds.png */; };
 		4F1A8687255F8F9E00D7EA42 /* bg_star.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F1A8686255F8F9500D7EA42 /* bg_star.png */; };
+		4F42B4CD2564BC5F00C1C897 /* bounce.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F42B4CC2564BC5A00C1C897 /* bounce.wav */; };
 		4F5E8C032560A54D00312B71 /* Level3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F5E8C012560A54D00312B71 /* Level3.cpp */; };
 		4FF69F362560A22B005BC6E3 /* Level2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FF69F342560A22B005BC6E3 /* Level2.cpp */; };
 		DBDF1B532323DE3F007CECB1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBDF1B522323DE3F007CECB1 /* main.cpp */; };
@@ -48,6 +49,7 @@
 				4F1A8680255F844100D7EA42 /* 8BitWin.mp3 in CopyFiles */,
 				4F1A8685255F8CB900D7EA42 /* bg_clouds.png in CopyFiles */,
 				4F1A8687255F8F9E00D7EA42 /* bg_star.png in CopyFiles */,
+				4F42B4CD2564BC5F00C1C897 /* bounce.wav in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +77,7 @@
 		4F1A8682255F8AD800D7EA42 /* Background.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
 		4F1A8684255F8CB500D7EA42 /* bg_clouds.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_clouds.png; sourceTree = "<group>"; };
 		4F1A8686255F8F9500D7EA42 /* bg_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_star.png; sourceTree = "<group>"; };
+		4F42B4CC2564BC5A00C1C897 /* bounce.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bounce.wav; sourceTree = "<group>"; };
 		4F5E8C012560A54D00312B71 /* Level3.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Level3.cpp; sourceTree = "<group>"; };
 		4F5E8C022560A54D00312B71 /* Level3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Level3.h; sourceTree = "<group>"; };
 		4FF69F342560A22B005BC6E3 /* Level2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Level2.cpp; sourceTree = "<group>"; };
@@ -129,6 +132,7 @@
 		DBDF1B512323DE3F007CECB1 /* SDLProject */ = {
 			isa = PBXGroup;
 			children = (
+				4F42B4CC2564BC5A00C1C897 /* bounce.wav */,
 				4F1A8686255F8F9500D7EA42 /* bg_star.png */,
 				4F1A8684255F8CB500D7EA42 /* bg_clouds.png */,
 				4F1A867F255F843A00D7EA42 /* 8BitWin.mp3 */,
