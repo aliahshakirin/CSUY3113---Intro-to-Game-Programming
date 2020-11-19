@@ -267,11 +267,16 @@ void Entity::Update(float deltaTime, Entity *player, Entity *objects, int object
     CheckCollisionsX(objects, objectCount);
     
     if (position.y < -15) {
-        if (*lives > 0) {
-            --(*lives);
-        }
-        if (*lives == 0) {
+        if (entityType == ENEMY) {
             isActive = false;
+            
+        } else {
+            if (*lives > 0) {
+                --(*lives);
+            }
+            if (*lives == 0) {
+                isActive = false;
+            }
         }
     }
     
