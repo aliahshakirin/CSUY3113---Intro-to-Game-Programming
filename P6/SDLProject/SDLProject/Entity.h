@@ -12,8 +12,10 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "ShaderProgram.h"
 #include "Map.h"
+#include <SDL_mixer.h>
 
-enum EntityType {PLAYER, PLATFORM, ENEMY, ENTRANCE1, ENTRANCE2, ENTRANCE3, ENTRANCE4, EXIT,
+
+enum EntityType {NONE, PLAYER, PLATFORM, ENEMY, ENTRANCE1, ENTRANCE2, ENTRANCE3, ENTRANCE4, EXIT,
     KEY, BOSS_KEY, BOSS_DOOR, FISHING_ROD, POND, RING};
 enum AIType {WALKERY, WALKERX, WAITANDGO};
 enum State { IDLE, WALKING, ATTACKING};
@@ -36,6 +38,11 @@ public:
     bool key = 0;
     bool boss_key = 0;
     bool mystery = 0;
+    bool missing_object = 0;
+    bool missing_object_appear = 0;
+    Mix_Chunk *player_die = Mix_LoadWAV("player_die.wav");
+    Mix_Chunk *monster_die = Mix_LoadWAV("monster_die.wav");
+    Mix_Chunk *collect = Mix_LoadWAV("collect.wav");
     
     float width = 1;
     float height = 1;

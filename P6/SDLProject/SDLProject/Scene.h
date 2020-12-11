@@ -27,6 +27,7 @@ struct GameState {
     Background *background;
     int nextScene;
     bool clear = 0;
+    bool missing_object_appear = 0;
 };
 
 class Scene {

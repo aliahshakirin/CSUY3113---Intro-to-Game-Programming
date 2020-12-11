@@ -129,6 +129,7 @@ bool Map::IsPond(glm::vec3 position) {
     if (type == TERRAIN) {
         if ((std::find(std::begin(pondArr), std::end(pondArr), tile) == std::end(pondArr))) return false;
     }
+    if (type == DUNGEON) return false;
     // other than tile for pond, return false
     
     return true;

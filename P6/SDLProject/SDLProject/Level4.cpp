@@ -3,7 +3,7 @@
 #define LEVEL4_WIDTH 20
 #define LEVEL4_HEIGHT 16
 
-#define LEVEL4_ENEMY_COUNT 7
+#define LEVEL4_ENEMY_COUNT 6
 
 #define LEVEL4_OBJECT_COUNT 6
 
@@ -152,36 +152,28 @@ void Level4::Initialize() {
     //state.enemies[3].textureID = enemy3TextureID;
     //state.enemies[4].textureID = enemy2TextureID;
     
-    state.enemies[0].textureID = enemy2TextureID;
-    state.enemies[0].isActive = true;
-    state.enemies[0].position = glm::vec3(18, -12, 0);
-    state.enemies[0].aiType = WAITANDGO;
-    state.enemies[0].state = IDLE;
-    state.enemies[0].speed = 1.8f;
     
-    for (int i = 1; i < LEVEL4_ENEMY_COUNT; i++) {
+    for (int i = 0; i < LEVEL4_ENEMY_COUNT; i++) {
         state.enemies[i].textureID = enemyTextureID;
     }
     
-    state.enemies[1].position = glm::vec3(2, -10, 0);
+    state.enemies[0].position = glm::vec3(2, -10, 0);
+    state.enemies[0].aiType = WALKERY;
+    state.enemies[1].textureID = enemyTextureID;
+    state.enemies[1].position = glm::vec3(1, -10, 0);
     state.enemies[1].aiType = WALKERY;
-    state.enemies[1].isActive = true;
+    
+    
+    state.enemies[2].position = glm::vec3(10, -3, 0);
+    state.enemies[2].aiType = WALKERX;
     state.enemies[2].textureID = enemyTextureID;
-    state.enemies[2].position = glm::vec3(1, -10, 0);
-    state.enemies[2].aiType = WALKERY;
-    state.enemies[2].isActive = true;
     
-    
-    state.enemies[3].position = glm::vec3(10, -3, 0);
+    state.enemies[3].position = glm::vec3(5, -2, 0);
     state.enemies[3].aiType = WALKERX;
-    state.enemies[3].textureID = enemyTextureID;
-    
-    state.enemies[4].position = glm::vec3(5, -2, 0);
+    state.enemies[4].position = glm::vec3(14, -1, 0);
     state.enemies[4].aiType = WALKERX;
-    state.enemies[5].position = glm::vec3(14, -1, 0);
+    state.enemies[5].position = glm::vec3(8, -5, 0);
     state.enemies[5].aiType = WALKERX;
-    state.enemies[6].position = glm::vec3(8, -5, 0);
-    state.enemies[6].aiType = WALKERX;
     
   
     
@@ -207,7 +199,6 @@ void Level4::Update(float deltaTime) {
         state.enemies[i].Update(deltaTime, state.player, state.enemies, LEVEL4_ENEMY_COUNT, state.objects, LEVEL4_OBJECT_COUNT, state.map);
     }
     
-    //int prevLives = *l_lives;
     
     state.player->Update(deltaTime, state.player, state.enemies, LEVEL4_ENEMY_COUNT, state.objects, LEVEL4_OBJECT_COUNT, state.map);
     
@@ -224,26 +215,9 @@ void Level4::Update(float deltaTime) {
         if (state.player->mystery == 0) {
             state.objects[5].isActive = true;
         }
-        
-        //std::cout << (*state.player->level) << '\n';
+
     }
-    
-    /*
-    if (state.player->collidedRight && state.player->lastCollision == ENTRANCE1) {
-        state.nextScene = 2;
-    }
-*/
-    /*
-    if ((*l1_lives) < prevLives && (*l1_lives) != 0 ) {
-        state.nextScene = 1;
-    }
-    
-    for (int i = 0; i < LEVEL4_ENEMY_COUNT; i++) {
-        if (state.enemies[i].isActive == false) { //only for 1 enemy
-            state.nextScene = 2;
-        }
-    }
-     */
+
     
 }
 

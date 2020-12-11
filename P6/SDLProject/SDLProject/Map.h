@@ -31,7 +31,6 @@ enum mapType {TERRAIN, DUNGEON};
      
      float left_bound, right_bound, top_bound, bottom_bound;
 public:
-     
      Map(int width, int height, unsigned int *levelData, GLuint textureID, float tile_size, int tile_count_x, int tile_count_y, mapType type);
      void Build();
      void Render(ShaderProgram *program);

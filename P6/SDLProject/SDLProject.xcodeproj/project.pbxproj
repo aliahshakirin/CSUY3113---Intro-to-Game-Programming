@@ -21,10 +21,19 @@
 		4F7467D1257DDF8A00D0253C /* MainWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7467CF257DDF8A00D0253C /* MainWorld.cpp */; };
 		4F7467D5257DE62C00D0253C /* terrain.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F7467D4257DE62500D0253C /* terrain.png */; };
 		4F7467D9257DF79A00D0253C /* player.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F7467D8257DF79300D0253C /* player.png */; };
+		4F817C5E2582EC33000B1373 /* player_die.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F817C5D2582EC2D000B1373 /* player_die.wav */; };
+		4F817C602582EF4A000B1373 /* monster_die.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F817C5F2582EF46000B1373 /* monster_die.wav */; };
+		4F817C622582F013000B1373 /* fishing.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F817C612582F00D000B1373 /* fishing.wav */; };
+		4F817C642582F67D000B1373 /* dungeon_atmo.mp3 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F817C632582F67A000B1373 /* dungeon_atmo.mp3 */; };
+		4F817C662582F9BE000B1373 /* Royal Coupling.mp3 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F817C652582F9BA000B1373 /* Royal Coupling.mp3 */; };
+		4F817C682582FC0A000B1373 /* collect.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F817C672582FC06000B1373 /* collect.wav */; };
+		4F817C6A25831030000B1373 /* door_open.mp3 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F817C692583102B000B1373 /* door_open.mp3 */; };
+		4F817C7225831382000B1373 /* tree.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F817C7125831374000B1373 /* tree.png */; };
+		4F817C76258317FE000B1373 /* trap_door.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F817C75258317FB000B1373 /* trap_door.png */; };
+		4F817C7825831969000B1373 /* green_bg.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F817C7725831947000B1373 /* green_bg.png */; };
 		4FA316052580289F005A4C58 /* Dungeon_Tileset.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FA316042580289C005A4C58 /* Dungeon_Tileset.png */; };
 		4FA3160825803EAE005A4C58 /* sideexit1.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FA3160725803E97005A4C58 /* sideexit1.png */; };
 		4FA3160925803EB1005A4C58 /* sideexit2.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FA3160625803E97005A4C58 /* sideexit2.png */; };
-		4FA3160B25803F67005A4C58 /* ctg.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FA3160A25803F65005A4C58 /* ctg.png */; };
 		4FA3160D25804084005A4C58 /* skeleton.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FA3160C2580407F005A4C58 /* skeleton.png */; };
 		4FA3160F25805191005A4C58 /* key.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FA3160E25805187005A4C58 /* key.png */; };
 		4FC49EE5257F36F200F65F86 /* entrance.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FC49EE4257F36EE00F65F86 /* entrance.png */; };
@@ -57,6 +66,9 @@
 			dstSubfolderSpec = 6;
 			files = (
 				DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */,
+				4F817C7825831969000B1373 /* green_bg.png in CopyFiles */,
+				4F817C622582F013000B1373 /* fishing.wav in CopyFiles */,
+				4F817C602582EF4A000B1373 /* monster_die.wav in CopyFiles */,
 				4FE203092581E5840071DC97 /* ring.png in CopyFiles */,
 				4FE203072581D0D80071DC97 /* Fish-rod.png in CopyFiles */,
 				4FE203052581C6B80071DC97 /* bossDoor2.png in CopyFiles */,
@@ -66,7 +78,6 @@
 				4FE202F425816B6F0071DC97 /* maskguyR.png in CopyFiles */,
 				4FA3160F25805191005A4C58 /* key.png in CopyFiles */,
 				4FA3160D25804084005A4C58 /* skeleton.png in CopyFiles */,
-				4FA3160B25803F67005A4C58 /* ctg.png in CopyFiles */,
 				4F1A8675255F74B600D7EA42 /* pixel_font.png in CopyFiles */,
 				4F1A8680255F844100D7EA42 /* 8BitWin.mp3 in CopyFiles */,
 				4F1A8685255F8CB900D7EA42 /* bg_clouds.png in CopyFiles */,
@@ -78,6 +89,13 @@
 				4FA316052580289F005A4C58 /* Dungeon_Tileset.png in CopyFiles */,
 				4FA3160925803EB1005A4C58 /* sideexit2.png in CopyFiles */,
 				4FA3160825803EAE005A4C58 /* sideexit1.png in CopyFiles */,
+				4F817C5E2582EC33000B1373 /* player_die.wav in CopyFiles */,
+				4F817C642582F67D000B1373 /* dungeon_atmo.mp3 in CopyFiles */,
+				4F817C662582F9BE000B1373 /* Royal Coupling.mp3 in CopyFiles */,
+				4F817C682582FC0A000B1373 /* collect.wav in CopyFiles */,
+				4F817C6A25831030000B1373 /* door_open.mp3 in CopyFiles */,
+				4F817C7225831382000B1373 /* tree.png in CopyFiles */,
+				4F817C76258317FE000B1373 /* trap_door.png in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,10 +123,19 @@
 		4F7467D0257DDF8A00D0253C /* MainWorld.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainWorld.h; sourceTree = "<group>"; };
 		4F7467D4257DE62500D0253C /* terrain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = terrain.png; sourceTree = "<group>"; };
 		4F7467D8257DF79300D0253C /* player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player.png; sourceTree = "<group>"; };
+		4F817C5D2582EC2D000B1373 /* player_die.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = player_die.wav; sourceTree = "<group>"; };
+		4F817C5F2582EF46000B1373 /* monster_die.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = monster_die.wav; sourceTree = "<group>"; };
+		4F817C612582F00D000B1373 /* fishing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fishing.wav; sourceTree = "<group>"; };
+		4F817C632582F67A000B1373 /* dungeon_atmo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dungeon_atmo.mp3; sourceTree = "<group>"; };
+		4F817C652582F9BA000B1373 /* Royal Coupling.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Royal Coupling.mp3"; sourceTree = "<group>"; };
+		4F817C672582FC06000B1373 /* collect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = collect.wav; sourceTree = "<group>"; };
+		4F817C692583102B000B1373 /* door_open.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = door_open.mp3; sourceTree = "<group>"; };
+		4F817C7125831374000B1373 /* tree.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tree.png; path = ../../../../../Downloads/tree.png; sourceTree = "<group>"; };
+		4F817C75258317FB000B1373 /* trap_door.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trap_door.png; sourceTree = "<group>"; };
+		4F817C7725831947000B1373 /* green_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_bg.png; sourceTree = "<group>"; };
 		4FA316042580289C005A4C58 /* Dungeon_Tileset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Dungeon_Tileset.png; sourceTree = "<group>"; };
 		4FA3160625803E97005A4C58 /* sideexit2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sideexit2.png; sourceTree = "<group>"; };
 		4FA3160725803E97005A4C58 /* sideexit1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sideexit1.png; sourceTree = "<group>"; };
-		4FA3160A25803F65005A4C58 /* ctg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ctg.png; sourceTree = "<group>"; };
 		4FA3160C2580407F005A4C58 /* skeleton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skeleton.png; sourceTree = "<group>"; };
 		4FA3160E25805187005A4C58 /* key.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = key.png; sourceTree = "<group>"; };
 		4FC49EE4257F36EE00F65F86 /* entrance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = entrance.png; sourceTree = "<group>"; };
@@ -177,6 +204,16 @@
 		DBDF1B512323DE3F007CECB1 /* SDLProject */ = {
 			isa = PBXGroup;
 			children = (
+				4F817C7725831947000B1373 /* green_bg.png */,
+				4F817C75258317FB000B1373 /* trap_door.png */,
+				4F817C7125831374000B1373 /* tree.png */,
+				4F817C692583102B000B1373 /* door_open.mp3 */,
+				4F817C672582FC06000B1373 /* collect.wav */,
+				4F817C652582F9BA000B1373 /* Royal Coupling.mp3 */,
+				4F817C632582F67A000B1373 /* dungeon_atmo.mp3 */,
+				4F817C612582F00D000B1373 /* fishing.wav */,
+				4F817C5F2582EF46000B1373 /* monster_die.wav */,
+				4F817C5D2582EC2D000B1373 /* player_die.wav */,
 				4FE203082581E5810071DC97 /* ring.png */,
 				4FE203062581D0D30071DC97 /* Fish-rod.png */,
 				4FE203032581C6B20071DC97 /* bossDoor1.png */,
@@ -186,7 +223,6 @@
 				4FE202F325816B6C0071DC97 /* maskguyR.png */,
 				4FA3160E25805187005A4C58 /* key.png */,
 				4FA3160C2580407F005A4C58 /* skeleton.png */,
-				4FA3160A25803F65005A4C58 /* ctg.png */,
 				4FA3160725803E97005A4C58 /* sideexit1.png */,
 				4FA3160625803E97005A4C58 /* sideexit2.png */,
 				4FA316042580289C005A4C58 /* Dungeon_Tileset.png */,

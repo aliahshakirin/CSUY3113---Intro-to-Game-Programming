@@ -22,7 +22,7 @@ void Background::Render(ShaderProgram *program) {
     
     
     //bottom left, bottom right, top right, bottom left, top right, top left
-    float vertices[]  = {  -7.0, -7.0, 7.0, -7.0, 7.0, 7.0, -7.0, -7.0, 7.0, 7.0, -7.0, 7.0 };
+    float vertices[]  = {  -6.0, -4.0, 6.0, -4.0, 6.0, 4.0, -6.0, -4.0, 6.0, 4.0, -6.0, 4.0 };
     
     float texCoords[] = { 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0 };
     

@@ -70,31 +70,35 @@ bool Entity::CheckCollision(Entity *other) {
             
             if (object->entityType == ENEMY && entityType == PLAYER) {
                 if (collidedTop && (animIndices == animAttackUL || animIndices == animAttackUR) ) {
+                    Mix_PlayChannel(-1,monster_die,0);
                     object->isActive = false;
                     
                 }
                 else if (collidedTop || collidedBottom) {
+                    Mix_PlayChannel(-1,player_die,0);
                     isActive = false;
                 }
             }
             
             if (object->entityType == KEY && entityType == PLAYER) {
+                Mix_PlayChannel(-1,collect,0);
                 object->isActive = false;
-                
                 key = 1;
             }
             if (object->entityType == BOSS_KEY && entityType == PLAYER) {
+                Mix_PlayChannel(-1,collect,0);
                 object->isActive = false;
                 boss_key = 1;
             }
             if (object->entityType == FISHING_ROD && entityType == PLAYER) {
+                Mix_PlayChannel(-1,collect,0);
                 object->isActive = false;
                 mystery = 1;
             }
             if (object->entityType == RING && entityType == PLAYER) {
-                std::cout << "RING check\n";
+                Mix_PlayChannel(-1,collect,0);
                 object->isActive = false;
-                key = 1;
+                missing_object = 1;
             }
             
             lastCollision = object->entityType;
@@ -143,33 +147,40 @@ void Entity::CheckCollisionsX(Entity *objects, int objectCount)
             if (entityType == KEY) return;
             if (object->entityType == ENEMY && entityType == PLAYER) {
                 if (collidedLeft && (animIndices == animAttackL) ) {
+                    Mix_PlayChannel(-1,monster_die,0);
                     object->isActive = false;
                 } else if (collidedRight && (animIndices == animAttackR) ) {
+                    Mix_PlayChannel(-1,monster_die,0);
                     object->isActive = false;
                 }
                 else if (collidedLeft || collidedRight){
+                    Mix_PlayChannel(-1,player_die,0);
                     isActive = false;
                 }
             }
             if (object->entityType == KEY && entityType == PLAYER) {
                 object->isActive = false;
-                //++(*level);
+                Mix_PlayChannel(-1,collect,0);
                 key = 1;
             }
             if (object->entityType == BOSS_KEY && entityType == PLAYER) {
                 object->isActive = false;
+                Mix_PlayChannel(-1,collect,0);
                 boss_key = 1;
             }
             if (object->entityType == FISHING_ROD && entityType == PLAYER) {
+                Mix_PlayChannel(-1,collect,0);
                 object->isActive = false;
                 mystery = 1;
             }
             if (object->entityType == RING && entityType == PLAYER) {
+                Mix_PlayChannel(-1,collect,0);
                 object->isActive = false;
-                key = 1;
+                missing_object = 1;
             }
 
             lastCollision = object->entityType;
+            return;
             //std::cout << lastCollision << '\n';
         
         }
@@ -234,7 +245,12 @@ void Entity::CheckCollisionsY(Map *map)
         lastCollision = POND;
         int x_pos = position.x + 3;
         int y_pos = position.y;
-        ring_pos = glm::vec3(x_pos, y_pos, 0);
+        
+        if (missing_object_appear == 0) {
+            ring_pos = glm::vec3(x_pos, y_pos, 0);
+            missing_object_appear = 1;
+        }
+        
         
     }
     
@@ -272,7 +288,19 @@ void Entity::CheckCollisionsX(Map *map)
             
         }
         int y_pos = position.y;
-        ring_pos = glm::vec3(x_pos, y_pos, 0);
+        //ring_pos = glm::vec3(x_pos, y_pos, 0);
+        
+        if (missing_object_appear == 0) {
+            ring_pos = glm::vec3(x_pos, y_pos, 0);
+            missing_object_appear = 1;
+        }
+        /*
+        if (missing_object == 0) {
+            ring_pos = glm::vec3(x_pos, y_pos, 0);
+            missing_object = 1;
+        }
+         */
+        
         
     }
 
@@ -421,7 +449,6 @@ void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyC
     
     velocity.x = movement.x * speed;
     velocity.y = movement.y * speed;
-    //velocity += acceleration * deltaTime;
     
     position.y += velocity.y * deltaTime;
     CheckCollisionsY(map);
@@ -443,8 +470,8 @@ void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyC
         //std::cout << "w: " << width << '\n';
         //std::cout << "h: " << height << '\n';
         //std::cout << "state: " << state << '\n';
-        //std::cout << "x: " << position.x << '\n';
-        //std::cout << "y: " << position.y << '\n';
+        std::cout << "x: " << position.x << '\n';
+        std::cout << "y: " << position.y << '\n';
     }
     
     

@@ -28,12 +28,16 @@ bool gameIsRunning = true;
 
 ShaderProgram program;
 glm::mat4 viewMatrix, modelMatrix, projectionMatrix;
+glm::mat4 uiViewMatrix, uiProjectionMatrix;
 
 Scene *currentScene;
 Scene *sceneList[6];
 
-Mix_Music *music;
-Mix_Chunk *bounce;
+Mix_Music *music_dungeon;
+Mix_Music *main_music;
+Mix_Chunk *fishing;
+Mix_Chunk *door;
+
 
 int level = 1;
 
@@ -57,11 +61,18 @@ void Initialize() {
     program.Load("shaders/vertex_textured.glsl", "shaders/fragment_textured.glsl");
     
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
-    music = Mix_LoadMUS("8BitWin.mp3");
-    //Mix_PlayMusic(music,-1);
-    //Mix_VolumeMusic(MIX_MAX_VOLUME / 4);
+    music_dungeon = Mix_LoadMUS("dungeon_atmo.mp3");
+    main_music = Mix_LoadMUS("Royal Coupling.mp3");
+    Mix_PlayMusic(main_music,-1);
+    Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
     
-    bounce = Mix_LoadWAV("bounce.wav");
+    fishing = Mix_LoadWAV("fishing.wav");
+    door = Mix_LoadWAV("door_open.wav");
+    
+    //player_die = Mix_LoadWAV("player_die.wav");
+    
+    uiViewMatrix = glm::mat4(1.0);
+    uiProjectionMatrix = glm::ortho(-5.0f, 5.0f, -3.75f, 3.75f, -1.0f, 1.0f);
     
     viewMatrix = glm::mat4(1.0f);
     modelMatrix = glm::mat4(1.0f);
@@ -84,7 +95,7 @@ void Initialize() {
     sceneList[3] = new Level2(&level);
     sceneList[4] = new Level3(&level);
     sceneList[5] = new Level4(&level);
-    SwitchToScene(sceneList[1]); // change later
+    SwitchToScene(sceneList[0]); // change later
     
 }
 
@@ -114,27 +125,26 @@ void ProcessInput() {
                         break;
                         
                     case SDLK_SPACE:
-                        currentScene->state.player->width = 1.2f;
-                        currentScene->state.player->height = 1.2f;
                         currentScene->state.player->state = ATTACKING;
                         
                         if (currentScene->state.mode == MAIN_MENU) break;
                         
                         if (currentScene->state.player->animIndices == currentScene->state.player->animLeft) {
+                            currentScene->state.player->width = 1.2f;
                             currentScene->state.player->animIndices = currentScene->state.player->animAttackL;
                         }
                         else if (currentScene->state.player->animIndices == currentScene->state.player->animRight) {
-                            //std::cout << "yes\n";
+                            currentScene->state.player->width = 1.2f;
                             currentScene->state.player->animIndices = currentScene->state.player->animAttackR;
                         }
                         else if (currentScene->state.player->animIndices == currentScene->state.player->animUpL) {
+                            currentScene->state.player->height = 1.2f;
                             currentScene->state.player->animIndices = currentScene->state.player->animAttackUL;
                         }
                         else if (currentScene->state.player->animIndices == currentScene->state.player->animUpR) {
+                            currentScene->state.player->height = 1.2f;
                             currentScene->state.player->animIndices = currentScene->state.player->animAttackUR;
                         }
-                        
-                        Mix_PlayChannel(-1,bounce,0);
                         
                         break;
                     case SDLK_RETURN:
@@ -146,25 +156,38 @@ void ProcessInput() {
                         if (currentScene->state.mode == GAME_LEVEL) {
                             // colliding with entrance must match with player level to switch scene
                             if (currentScene->state.player->lastCollision == ENTRANCE1 && level == 1) {
+                                Mix_PlayMusic(music_dungeon,-1);
                                 currentScene->state.nextScene = 2;
                             }
                             if (currentScene->state.player->lastCollision == ENTRANCE2 && level == 2) {
+                                
+                                Mix_PlayMusic(music_dungeon,-1);
                                 currentScene->state.nextScene = 3;
                             }
                             if (currentScene->state.player->lastCollision == ENTRANCE3 && level == 3) {
+                                
+                                Mix_PlayMusic(music_dungeon,-1);
                                 currentScene->state.nextScene = 4;
                             }
                             if (currentScene->state.player->lastCollision == ENTRANCE4 && level == 4) {
+                                
+                                Mix_PlayMusic(music_dungeon,-1);
                                 currentScene->state.nextScene = 5;
                             }
                             if (currentScene->state.player->lastCollision == EXIT && currentScene->state.player->key == 1 && currentScene->state.clear == 1) { // + ai is all dead
+                                
+                                Mix_PlayMusic(main_music,-1);
                                 currentScene->state.nextScene = 1;
                             }
                             if (currentScene->state.player->lastCollision == BOSS_DOOR && currentScene->state.player->boss_key == 1) {
+                                
                                 currentScene->state.objects[4].isActive = false;
                             }
-                            if (currentScene->state.player->lastCollision == POND && level == 5 && currentScene->state.player->key == 0) {
+                            if (currentScene->state.player->lastCollision == POND && level == 5
+                                && currentScene->state.player->key == 0 && currentScene->state.missing_object_appear == 0) { // change level
                                 currentScene->state.objects[4].isActive = true;
+                                currentScene->state.missing_object_appear = 1;
+                                
                             }
                             
                             
@@ -239,6 +262,8 @@ float lastTicks = 0;
 float accumulator = 0.0f;
 
 void Update() {
+    program.SetViewMatrix(viewMatrix);
+    
     float ticks = (float)SDL_GetTicks() / 1000.0f;
     float deltaTime = ticks - lastTicks;
     lastTicks = ticks;
@@ -297,16 +322,40 @@ void Update() {
     }
     
     
+    
 }
     
 
 
 void Render() {
+    GLuint wordTextureID = Util::LoadTexture("pixel_font.png");
+    
     glClear(GL_COLOR_BUFFER_BIT);
     
     program.SetViewMatrix(viewMatrix);
     
-    currentScene->Render(&program);
+    currentScene->Render(&program); // check
+    
+    program.SetProjectionMatrix(uiProjectionMatrix);
+    program.SetViewMatrix(uiViewMatrix);
+    
+    if (currentScene->state.mode == GAME_LEVEL) {
+        if (currentScene->state.player->missing_object == 1) {
+            Util::DrawText(&program, wordTextureID, "Congrats!", 0.9, 0.0f, glm::vec3(-3.3,0.5,0));
+            Util::DrawText(&program, wordTextureID, "You found the missing ring", 0.3, 0.0f, glm::vec3(-3.5,-1.5,0));
+        }
+        
+    }
+    
+    if (currentScene->state.mode == GAME_LEVEL) {
+        if (currentScene->state.player->isActive == false) {
+            Util::DrawText(&program, wordTextureID, "Annihilated", 0.8, 0.0f, glm::vec3(-3.7,0,0));
+            Util::DrawText(&program, wordTextureID, "You fail to find the", 0.3, 0.0f, glm::vec3(-2.8,-1,0));
+            Util::DrawText(&program, wordTextureID, "missing ring", 0.3, 0.0f, glm::vec3(-1.7,-1.5,0));
+        }
+        
+    }
+    
     
     SDL_GL_SwapWindow(displayWindow);
 }

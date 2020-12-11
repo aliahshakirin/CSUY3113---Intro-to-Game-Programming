@@ -5,7 +5,7 @@
 
 #define MAINWORLD_ENEMY_COUNT 0
 
-#define MAINWORLD_OBJECT_COUNT 5
+#define MAINWORLD_OBJECT_COUNT 17
 
 // 42 empty brick
 // pond 11,12,13, 27, 27, 29, 43, 44, 45
@@ -47,7 +47,7 @@ void MainWorld::Initialize() {
     state.objects = new Entity[MAINWORLD_OBJECT_COUNT];
     // 0 - 3 is entrance
     for (int i = 0; i < 4; i++) {
-        state.objects[i].textureID = Util::LoadTexture("entrance.png");
+        state.objects[i].textureID = Util::LoadTexture("trap_door.png");
     }
     
     state.objects[0].position = glm::vec3(3, -15, 0);
@@ -64,6 +64,21 @@ void MainWorld::Initialize() {
     state.objects[4].entityType = RING;
     state.objects[4].isActive = false;
     
+    for (int i = 5; i < MAINWORLD_OBJECT_COUNT; i++) {
+        state.objects[i].textureID = Util::LoadTexture("tree.png");
+    }
+    state.objects[5].position = glm::vec3(6, -6.3, 0);
+    state.objects[6].position = glm::vec3(7, -6.3, 0);
+    state.objects[7].position = glm::vec3(13, -8.4, 0);
+    state.objects[8].position = glm::vec3(13, -9.4, 0);
+    state.objects[9].position = glm::vec3(3, -13, 0);
+    state.objects[10].position = glm::vec3(2, -13, 0);
+    state.objects[11].position = glm::vec3(3, -12, 0);
+    state.objects[12].position = glm::vec3(10, -13, 0);
+    state.objects[13].position = glm::vec3(10, -14, 0);
+    state.objects[14].position = glm::vec3(19, -6.2, 0);
+    state.objects[15].position = glm::vec3(18, -6.2, 0);
+    state.objects[16].position = glm::vec3(6, -1, 0);
     
     // Initialize Player
     // can put this somewhere else as u will make this a lot of time every level
@@ -145,10 +160,6 @@ void MainWorld::Render(ShaderProgram *program) {
     Util::DrawText(program, wordTextureID, "Dungeon 3", 0.3, 0.0f, glm::vec3(10, -15 ,0));
     Util::DrawText(program, wordTextureID, "Dungeon 4", 0.3, 0.0f, glm::vec3(11, -0.3 ,0));
     
-    // change to ui overlay for dialogue
-    if (state.player->key == 1) {
-        Util::DrawText(program, wordTextureID, "You Win", 0.5, 0.0f, glm::vec3(state.player->position.x, state.player->position.y ,0));
-    }
     
     for (int i = 0; i < MAINWORLD_OBJECT_COUNT; i++) {
         state.objects[i].Render(program);
