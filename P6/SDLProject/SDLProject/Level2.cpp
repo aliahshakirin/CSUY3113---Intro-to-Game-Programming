@@ -85,10 +85,10 @@ void Level2::Initialize() {
     state.player->animUpL = new int[3] {12, 12, 12};
     state.player->animUpR = new int[3] {8, 8, 8};
     
-    state.player->animAttackR = new int[3] {1, 2, 0};
+    state.player->animAttackR = new int[3] {1, 2, 3};
     state.player->animAttackL = new int[3] {5, 6, 7};
-    state.player->animAttackUR = new int[3] {9, 10, 0};
-    state.player->animAttackUL = new int[3] {10, 14, 15};
+    state.player->animAttackUR = new int[3] {9, 10, 11};
+    state.player->animAttackUL = new int[3] {13, 14, 15};
 
     
     state.player->state = IDLE;
@@ -116,7 +116,6 @@ void Level2::Initialize() {
         state.enemies[i].width = 0.5f;
         state.enemies[i].height = 0.5f;
         state.enemies[i].scale = glm::vec3(0.75,0.75,0);
-        //state.enemies[i].isActive = false;
     }
     
     for (int i = 0; i < 3; i++) {
@@ -146,13 +145,6 @@ void Level2::Initialize() {
     state.enemies[5].position = glm::vec3(2, -4, 0);
     state.enemies[5].speed = 2.5f;
     
-    //state.enemies[2].isActive = false;
-    //state.enemies[3].isActive = false;
-    //state.enemies[4].isActive = false;
-    
-    
-    //state.enemies[0].state = IDLE;
-    //state.enemies[0].isActive = false;
     
     
 }
@@ -176,7 +168,6 @@ void Level2::Update(float deltaTime) {
         state.enemies[i].Update(deltaTime, state.player, state.enemies, LEVEL2_ENEMY_COUNT, state.objects, LEVEL2_OBJECT_COUNT, state.map);
     }
     
-    //int prevLives = *l_lives;
     
     state.player->Update(deltaTime, state.player, state.enemies, LEVEL2_ENEMY_COUNT, state.objects, LEVEL2_OBJECT_COUNT, state.map);
     
@@ -187,25 +178,8 @@ void Level2::Update(float deltaTime) {
     
     if (state.clear) {
         *state.player->level = 3;
-        std::cout << (*state.player->level) << '\n';
     }
-    
-    /*
-    if (state.player->collidedRight && state.player->lastCollision == ENTRANCE1) {
-        state.nextScene = 2;
-    }
-*/
-    /*
-    if ((*l1_lives) < prevLives && (*l1_lives) != 0 ) {
-        state.nextScene = 1;
-    }
-    
-    for (int i = 0; i < LEVEL2_ENEMY_COUNT; i++) {
-        if (state.enemies[i].isActive == false) { //only for 1 enemy
-            state.nextScene = 2;
-        }
-    }
-     */
+
     
 }
 

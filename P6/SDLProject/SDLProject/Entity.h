@@ -43,6 +43,7 @@ public:
     Mix_Chunk *player_die = Mix_LoadWAV("player_die.wav");
     Mix_Chunk *monster_die = Mix_LoadWAV("monster_die.wav");
     Mix_Chunk *collect = Mix_LoadWAV("collect.wav");
+    Mix_Chunk *success = Mix_LoadWAV("success.wav");
     
     float width = 1;
     float height = 1;

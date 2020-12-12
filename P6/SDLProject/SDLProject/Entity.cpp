@@ -96,7 +96,8 @@ bool Entity::CheckCollision(Entity *other) {
                 mystery = 1;
             }
             if (object->entityType == RING && entityType == PLAYER) {
-                Mix_PlayChannel(-1,collect,0);
+                
+                Mix_PlayChannel(-1,success,0);
                 object->isActive = false;
                 missing_object = 1;
             }
@@ -174,7 +175,7 @@ void Entity::CheckCollisionsX(Entity *objects, int objectCount)
                 mystery = 1;
             }
             if (object->entityType == RING && entityType == PLAYER) {
-                Mix_PlayChannel(-1,collect,0);
+                Mix_PlayChannel(-1,success,0);
                 object->isActive = false;
                 missing_object = 1;
             }
@@ -394,12 +395,12 @@ void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyC
             animTime += deltaTime;
             if (animTime >= 0.25f)
             {
-                
                 animTime = 0.0f;
                 animIndex++;
                 //std::cout << animIndex << '\n';
                 if (animIndex >= animFrames)
                 {
+                    
                     animIndex = 0;
                     if (animIndices == animAttackR) {
                         animIndices = animRight;
@@ -414,7 +415,6 @@ void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyC
                     } else {
                         animIndices = animRight;
                     }
-                    
                     state = IDLE;
                     width = 0.4f;
                     height = 0.4f;
@@ -470,8 +470,8 @@ void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyC
         //std::cout << "w: " << width << '\n';
         //std::cout << "h: " << height << '\n';
         //std::cout << "state: " << state << '\n';
-        std::cout << "x: " << position.x << '\n';
-        std::cout << "y: " << position.y << '\n';
+        //std::cout << "x: " << position.x << '\n';
+        //std::cout << "y: " << position.y << '\n';
     }
     
     

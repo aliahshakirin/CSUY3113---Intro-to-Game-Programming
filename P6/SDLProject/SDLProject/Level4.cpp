@@ -97,7 +97,6 @@ void Level4::Initialize() {
     state.player->level = l4_level;
     
     state.player->position = glm::vec3(10, -14, 0);
-    //state.player->position = glm::vec3(10, -6, 0);
     state.player->movement = glm::vec3(0);
     state.player->scale = glm::vec3(2.0,2.0,0);
   
@@ -109,10 +108,10 @@ void Level4::Initialize() {
     state.player->animUpL = new int[3] {12, 12, 12};
     state.player->animUpR = new int[3] {8, 8, 8};
     
-    state.player->animAttackR = new int[3] {1, 2, 0};
+    state.player->animAttackR = new int[3] {1, 2, 3};
     state.player->animAttackL = new int[3] {5, 6, 7};
-    state.player->animAttackUR = new int[3] {9, 10, 0};
-    state.player->animAttackUL = new int[3] {10, 14, 15};
+    state.player->animAttackUR = new int[3] {9, 10, 11};
+    state.player->animAttackUL = new int[3] {13, 14, 15};
 
     
     state.player->state = IDLE;
@@ -126,13 +125,9 @@ void Level4::Initialize() {
     state.player->height = 0.4f;
     state.player->width = 0.4f;
     
-    //state.player->jumpPower = 6.5f;
-    //state.player->isActive = false;
     
     state.enemies = new Entity[LEVEL4_ENEMY_COUNT];
     GLuint enemyTextureID = Util::LoadTexture("skeleton.png");
-    GLuint enemy2TextureID = Util::LoadTexture("maskguyL.png");
-    //GLuint enemy3TextureID = Util::LoadTexture("maskguyR.png");
     
     for (int i = 0; i < LEVEL4_ENEMY_COUNT; i++) {
         state.enemies[i].entityType = ENEMY;
@@ -140,17 +135,7 @@ void Level4::Initialize() {
         state.enemies[i].width = 0.5f;
         state.enemies[i].height = 0.5f;
         state.enemies[i].scale = glm::vec3(0.75,0.75,0);
-        //state.enemies[i].isActive = false;
     }
-    
-    /*
-    for (int i = 0; i < LEVEL4_ENEMY_COUNT; i++) {
-        state.enemies[i].textureID = enemyTextureID;
-    }
-     */
-    
-    //state.enemies[3].textureID = enemy3TextureID;
-    //state.enemies[4].textureID = enemy2TextureID;
     
     
     for (int i = 0; i < LEVEL4_ENEMY_COUNT; i++) {

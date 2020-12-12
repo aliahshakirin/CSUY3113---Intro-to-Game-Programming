@@ -156,35 +156,37 @@ void ProcessInput() {
                         if (currentScene->state.mode == GAME_LEVEL) {
                             // colliding with entrance must match with player level to switch scene
                             if (currentScene->state.player->lastCollision == ENTRANCE1 && level == 1) {
+                                Mix_PlayChannel(-1,door,0);
                                 Mix_PlayMusic(music_dungeon,-1);
                                 currentScene->state.nextScene = 2;
                             }
                             if (currentScene->state.player->lastCollision == ENTRANCE2 && level == 2) {
-                                
+                                Mix_PlayChannel(-1,door,0);
                                 Mix_PlayMusic(music_dungeon,-1);
                                 currentScene->state.nextScene = 3;
                             }
                             if (currentScene->state.player->lastCollision == ENTRANCE3 && level == 3) {
-                                
+                                Mix_PlayChannel(-1,door,0);
                                 Mix_PlayMusic(music_dungeon,-1);
                                 currentScene->state.nextScene = 4;
                             }
                             if (currentScene->state.player->lastCollision == ENTRANCE4 && level == 4) {
-                                
+                                Mix_PlayChannel(-1,door,0);
                                 Mix_PlayMusic(music_dungeon,-1);
                                 currentScene->state.nextScene = 5;
                             }
                             if (currentScene->state.player->lastCollision == EXIT && currentScene->state.player->key == 1 && currentScene->state.clear == 1) { // + ai is all dead
-                                
+                                Mix_PlayChannel(-1,door,0);
                                 Mix_PlayMusic(main_music,-1);
                                 currentScene->state.nextScene = 1;
                             }
                             if (currentScene->state.player->lastCollision == BOSS_DOOR && currentScene->state.player->boss_key == 1) {
-                                
+                                Mix_PlayChannel(-1,door,0);
                                 currentScene->state.objects[4].isActive = false;
                             }
                             if (currentScene->state.player->lastCollision == POND && level == 5
                                 && currentScene->state.player->key == 0 && currentScene->state.missing_object_appear == 0) { // change level
+                                Mix_PlayChannel(-1,fishing,0);
                                 currentScene->state.objects[4].isActive = true;
                                 currentScene->state.missing_object_appear = 1;
                                 
@@ -204,49 +206,64 @@ void ProcessInput() {
     const Uint8 *keys = SDL_GetKeyboardState(NULL);
 
     if (keys[SDL_SCANCODE_LEFT]) {
-        currentScene->state.player->state = IDLE;
         currentScene->state.player->movement.x = -1.0f;
-        currentScene->state.player->animIndices = currentScene->state.player->animLeft;
-        
-    }
-    else if (keys[SDL_SCANCODE_RIGHT]) {
-        currentScene->state.player->state = IDLE;
-        currentScene->state.player->movement.x = 1.0f;
-        currentScene->state.player->animIndices = currentScene->state.player->animRight;
-        
-    }
-    else if (keys[SDL_SCANCODE_DOWN]) {
-        currentScene->state.player->state = IDLE;
-        currentScene->state.player->movement.y = -1.0f;
-        
-        if (currentScene->state.player->animIndices == currentScene->state.player->animUpR) {
-            currentScene->state.player->animIndices = currentScene->state.player->animRight;
-        } else if (currentScene->state.player->animIndices == currentScene->state.player->animUpL) {
+        if (currentScene->state.player->animIndex >= currentScene->state.player->animFrames && currentScene->state.player->state == ATTACKING) {
+            currentScene->state.player->state = IDLE;
+            //currentScene->state.player->movement.x = 1.0f;
+            currentScene->state.player->animIndices = currentScene->state.player->animLeft;
+        } else if (currentScene->state.player->state == IDLE) {
             currentScene->state.player->animIndices = currentScene->state.player->animLeft;
         }
         
     }
-    else if (keys[SDL_SCANCODE_UP]) {
-        currentScene->state.player->state = IDLE;
-        currentScene->state.player->movement.y = 1.0f;
-        if (currentScene->state.player->animIndices == currentScene->state.player->animLeft) {
-            currentScene->state.player->animIndices = currentScene->state.player->animUpL;
-        } else if (currentScene->state.player->animIndices == currentScene->state.player->animRight) {
-            currentScene->state.player->animIndices = currentScene->state.player->animUpR;
-        }
-        else if (currentScene->state.player->animIndices == currentScene->state.player->animAttackL) {
-            currentScene->state.player->animIndices = currentScene->state.player->animUpL;
-        }
-        else if (currentScene->state.player->animIndices == currentScene->state.player->animAttackR) {
-            currentScene->state.player->animIndices = currentScene->state.player->animUpR;
-        }
-        else if (currentScene->state.player->animIndices == currentScene->state.player->animAttackUR) {
-            currentScene->state.player->animIndices = currentScene->state.player->animUpR;
-        }
-        else if (currentScene->state.player->animIndices == currentScene->state.player->animAttackUL) {
-            currentScene->state.player->animIndices = currentScene->state.player->animUpL;
+    else if (keys[SDL_SCANCODE_RIGHT]) {
+        currentScene->state.player->movement.x = 1.0f;
+        if (currentScene->state.player->animIndex >= currentScene->state.player->animFrames && currentScene->state.player->state == ATTACKING) {
+            currentScene->state.player->state = IDLE;
+            //currentScene->state.player->movement.x = 1.0f;
+            currentScene->state.player->animIndices = currentScene->state.player->animRight;
+        } else if (currentScene->state.player->state == IDLE) {
+            currentScene->state.player->animIndices = currentScene->state.player->animRight;
         }
         
+    }
+    else if (keys[SDL_SCANCODE_DOWN]) {
+        
+        currentScene->state.player->movement.y = -1.0f;
+        
+        if (currentScene->state.player->animIndex >= currentScene->state.player->animFrames && currentScene->state.player->state == ATTACKING) {
+            currentScene->state.player->state = IDLE;
+            if (currentScene->state.player->animIndices == currentScene->state.player->animAttackR) {
+                currentScene->state.player->animIndices = currentScene->state.player->animRight;
+            } else if (currentScene->state.player->animIndices == currentScene->state.player->animAttackL) {
+                currentScene->state.player->animIndices = currentScene->state.player->animLeft;
+            }
+        } else if (currentScene->state.player->state == IDLE) {
+            if (currentScene->state.player->animIndices == currentScene->state.player->animUpR) {
+                currentScene->state.player->animIndices = currentScene->state.player->animRight;
+            } else if (currentScene->state.player->animIndices == currentScene->state.player->animUpL) {
+                currentScene->state.player->animIndices = currentScene->state.player->animLeft;
+            }
+        }
+        
+        
+    }
+    else if (keys[SDL_SCANCODE_UP]) {
+        currentScene->state.player->movement.y = 1.0f;
+        
+        if (currentScene->state.player->animIndex >= currentScene->state.player->animFrames && currentScene->state.player->state == ATTACKING) {
+            if (currentScene->state.player->animIndices == currentScene->state.player->animAttackUR) {
+                currentScene->state.player->animIndices = currentScene->state.player->animUpR;
+            } else if (currentScene->state.player->animIndices == currentScene->state.player->animAttackUL) {
+                currentScene->state.player->animIndices = currentScene->state.player->animUpL;
+            }
+        } else if (currentScene->state.player->state == IDLE) {
+            if (currentScene->state.player->animIndices == currentScene->state.player->animRight) {
+                currentScene->state.player->animIndices = currentScene->state.player->animUpR;
+            } else if (currentScene->state.player->animIndices == currentScene->state.player->animLeft) {
+                currentScene->state.player->animIndices = currentScene->state.player->animUpL;
+            }
+        }
         
     }
     

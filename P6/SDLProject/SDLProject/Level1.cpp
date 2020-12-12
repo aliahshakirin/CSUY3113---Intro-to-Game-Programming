@@ -84,10 +84,10 @@ void Level1::Initialize() {
     state.player->animUpL = new int[3] {12, 12, 12};
     state.player->animUpR = new int[3] {8, 8, 8};
     
-    state.player->animAttackR = new int[3] {1, 2, 0};
+    state.player->animAttackR = new int[3] {1, 2, 3};
     state.player->animAttackL = new int[3] {5, 6, 7};
-    state.player->animAttackUR = new int[3] {9, 10, 0};
-    state.player->animAttackUL = new int[3] {10, 14, 15};
+    state.player->animAttackUR = new int[3] {9, 10, 11};
+    state.player->animAttackUL = new int[3] {13, 14, 15};
 
     
     state.player->state = IDLE;
