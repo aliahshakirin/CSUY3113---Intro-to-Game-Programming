@@ -35,8 +35,11 @@ Scene *sceneList[6];
 
 Mix_Music *music_dungeon;
 Mix_Music *main_music;
+Mix_Music *menu_music;
+
 Mix_Chunk *fishing;
 Mix_Chunk *door;
+Mix_Chunk *locked_door;
 
 
 int level = 1;
@@ -63,13 +66,14 @@ void Initialize() {
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
     music_dungeon = Mix_LoadMUS("dungeon_atmo.mp3");
     main_music = Mix_LoadMUS("Royal Coupling.mp3");
-    Mix_PlayMusic(main_music,-1);
+    menu_music = Mix_LoadMUS("Arcade-Heroes.mp3");
+    
+    Mix_PlayMusic(menu_music,-1);
     Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
     
     fishing = Mix_LoadWAV("fishing.wav");
     door = Mix_LoadWAV("door_open.wav");
-    
-    //player_die = Mix_LoadWAV("player_die.wav");
+    locked_door = Mix_LoadWAV("locked_door.wav");
     
     uiViewMatrix = glm::mat4(1.0);
     uiProjectionMatrix = glm::ortho(-5.0f, 5.0f, -3.75f, 3.75f, -1.0f, 1.0f);
@@ -149,6 +153,7 @@ void ProcessInput() {
                         break;
                     case SDLK_RETURN:
                         if (currentScene->state.mode == MAIN_MENU) {
+                            Mix_PlayMusic(main_music,-1);
                             currentScene->state.nextScene = 1;
                         }
                         break;
@@ -175,7 +180,7 @@ void ProcessInput() {
                                 Mix_PlayMusic(music_dungeon,-1);
                                 currentScene->state.nextScene = 5;
                             }
-                            if (currentScene->state.player->lastCollision == EXIT && currentScene->state.player->key == 1 && currentScene->state.clear == 1) { // + ai is all dead
+                            if (currentScene->state.player->lastCollision == EXIT && currentScene->state.player->key == 1 && currentScene->state.clear == 1 ) { // + ai is all dead
                                 Mix_PlayChannel(-1,door,0);
                                 Mix_PlayMusic(main_music,-1);
                                 currentScene->state.nextScene = 1;
@@ -191,13 +196,32 @@ void ProcessInput() {
                                 currentScene->state.missing_object_appear = 1;
                                 
                             }
+                            if (currentScene->state.player->lastCollision == ENTRANCE1 && level != 1 && (currentScene->state.player->collidedTop || currentScene->state.player->collidedBottom || currentScene->state.player->collidedLeft || currentScene->state.player->collidedRight)) {
+                                Mix_PlayChannel(-1,locked_door,0);
+                            }
+                            if (currentScene->state.player->lastCollision == ENTRANCE2 && level != 2 && (currentScene->state.player->collidedTop || currentScene->state.player->collidedBottom || currentScene->state.player->collidedLeft || currentScene->state.player->collidedRight)) {
+                                Mix_PlayChannel(-1,locked_door,0);
+                            }
+                            if (currentScene->state.player->lastCollision == ENTRANCE3 && level != 3 && (currentScene->state.player->collidedTop || currentScene->state.player->collidedBottom || currentScene->state.player->collidedLeft || currentScene->state.player->collidedRight)) {
+                                Mix_PlayChannel(-1,locked_door,0);
+                            }
+                            if (currentScene->state.player->lastCollision == ENTRANCE4 && level != 4 && (currentScene->state.player->collidedTop || currentScene->state.player->collidedBottom || currentScene->state.player->collidedLeft || currentScene->state.player->collidedRight)) {
+                                Mix_PlayChannel(-1,locked_door,0);
+                            }
+                            if (currentScene->state.player->lastCollision == EXIT && (currentScene->state.player->key != 1 || currentScene->state.clear != 1) && (currentScene->state.player->collidedTop || currentScene->state.player->collidedBottom || currentScene->state.player->collidedLeft || currentScene->state.player->collidedRight)) { // + ai is all dead
+                                Mix_PlayChannel(-1,locked_door,0);
+                            }
+                            if (currentScene->state.player->lastCollision == BOSS_DOOR && currentScene->state.player->boss_key != 1 && (currentScene->state.player->collidedTop || currentScene->state.player->collidedBottom || currentScene->state.player->collidedLeft || currentScene->state.player->collidedRight)) {
+                                Mix_PlayChannel(-1,locked_door,0);
+                            }
+
                             
                             
                             
                         }
                         break;
                 }
-                break; // SDL_KEYDOWN
+                break;
         }
     }
     
@@ -337,6 +361,8 @@ void Update() {
         }
         
     }
+    
+    
     
     
     

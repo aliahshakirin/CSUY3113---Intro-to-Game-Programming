@@ -40,16 +40,15 @@ public:
     bool mystery = 0;
     bool missing_object = 0;
     bool missing_object_appear = 0;
+    bool interact = 0;
     Mix_Chunk *player_die = Mix_LoadWAV("player_die.wav");
     Mix_Chunk *monster_die = Mix_LoadWAV("monster_die.wav");
     Mix_Chunk *collect = Mix_LoadWAV("collect.wav");
     Mix_Chunk *success = Mix_LoadWAV("success.wav");
+    Mix_Music *game_over = Mix_LoadMUS("game_over.mp3");
     
     float width = 1;
     float height = 1;
-    
-    bool jump = false;
-    float jumpPower = 0;
     
     GLuint textureID;
     

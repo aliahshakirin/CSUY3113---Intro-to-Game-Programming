@@ -108,8 +108,6 @@ void Level3::Initialize() {
     state.player->height = 0.4f;
     state.player->width = 0.4f;
     
-    state.player->jumpPower = 6.5f;
-    //state.player->isActive = false;
     
     state.enemies = new Entity[LEVEL3_ENEMY_COUNT];
     GLuint enemyTextureID = Util::LoadTexture("skeleton.png");

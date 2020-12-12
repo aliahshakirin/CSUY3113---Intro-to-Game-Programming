@@ -45,9 +45,11 @@ void MainWorld::Initialize() {
     // Initialize Game Objects
     
     state.objects = new Entity[MAINWORLD_OBJECT_COUNT];
+    GLuint trap_doorTextureID = Util::LoadTexture("trap_door.png");
+    GLuint treeTextureID = Util::LoadTexture("tree.png");
     // 0 - 3 is entrance
     for (int i = 0; i < 4; i++) {
-        state.objects[i].textureID = Util::LoadTexture("trap_door.png");
+        state.objects[i].textureID = trap_doorTextureID;
     }
     
     state.objects[0].position = glm::vec3(3, -15, 0);
@@ -65,7 +67,7 @@ void MainWorld::Initialize() {
     state.objects[4].isActive = false;
     
     for (int i = 5; i < MAINWORLD_OBJECT_COUNT; i++) {
-        state.objects[i].textureID = Util::LoadTexture("tree.png");
+        state.objects[i].textureID = treeTextureID;
     }
     state.objects[5].position = glm::vec3(6, -6.3, 0);
     state.objects[6].position = glm::vec3(7, -6.3, 0);
@@ -127,12 +129,8 @@ void MainWorld::Initialize() {
     state.player->animCols = 4;
     state.player->animRows = 4;
     
-    state.player->height = 0.3f;
-    state.player->width = 0.3f;
-    
-    state.player->jumpPower = 6.5f;
-    //state.player->isActive = false;
-    
+    state.player->height = 0.5f;
+    state.player->width = 0.5f;
     
 }
 void MainWorld::Update(float deltaTime) {

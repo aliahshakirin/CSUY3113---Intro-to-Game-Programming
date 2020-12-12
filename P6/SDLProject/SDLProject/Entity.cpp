@@ -53,11 +53,6 @@ bool Entity::CheckCollision(Entity *other) {
                     collidedTop = true;
                     
                 }
-                /*
-                else if (object->position.y < position.y && (animIndices == animAttackL || animIndices == animAttackR) && object->position.x != position.y) {
-                    collidedBottom = true;
-                }
-                 */
                 
             }
             else if (object->position.y < position.y) {
@@ -76,6 +71,7 @@ bool Entity::CheckCollision(Entity *other) {
                 }
                 else if (collidedTop || collidedBottom) {
                     Mix_PlayChannel(-1,player_die,0);
+                    Mix_PlayMusic(game_over,-1);
                     isActive = false;
                 }
             }
@@ -103,11 +99,11 @@ bool Entity::CheckCollision(Entity *other) {
             }
             
             lastCollision = object->entityType;
-            
-            
+            return;
          
         }
     }
+    
 }
 
 void Entity::CheckCollisionsX(Entity *objects, int objectCount)
@@ -125,7 +121,7 @@ void Entity::CheckCollisionsX(Entity *objects, int objectCount)
                 collidedRight = true;
             }
             else if (velocity.x < 0) {
-                position.x += penetrationX + 0.01;
+                position.x += penetrationX;
                 velocity.x = 0;
                 collidedLeft = true;
             } else if (state == ATTACKING) {
@@ -156,6 +152,7 @@ void Entity::CheckCollisionsX(Entity *objects, int objectCount)
                 }
                 else if (collidedLeft || collidedRight){
                     Mix_PlayChannel(-1,player_die,0);
+                    Mix_PlayMusic(game_over,-1);
                     isActive = false;
                 }
             }
@@ -186,6 +183,7 @@ void Entity::CheckCollisionsX(Entity *objects, int objectCount)
         
         }
     }
+
 }
 
 void Entity::CheckCollisionsY(Map *map)
@@ -295,12 +293,6 @@ void Entity::CheckCollisionsX(Map *map)
             ring_pos = glm::vec3(x_pos, y_pos, 0);
             missing_object_appear = 1;
         }
-        /*
-        if (missing_object == 0) {
-            ring_pos = glm::vec3(x_pos, y_pos, 0);
-            missing_object = 1;
-        }
-         */
         
         
     }
@@ -342,6 +334,10 @@ void Entity::AIWaitAndGo(Entity *player) {
                 movement = glm::vec3(0);
                 state = IDLE;
             }
+            else if ( (position.x >  (player->position.x -0.05)) &&  (position.x <  (player->position.x +0.05)) ) {
+                movement = glm::vec3(0);
+                state = IDLE;
+            }
             else if (player->position.x < position.x ) {
                 movement = glm::vec3(-1,0,0);
             }
@@ -376,7 +372,7 @@ void Entity::AI(Entity *player) {
 //replace objects w/ enemies and add objects parameter
 void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyCount, Entity *objects, int objectCount, Map *map)
 {
-    
+    //std::cout << collidedLeft << '\n';
     if (isActive == false) return;
     
     if(entityType == ENEMY) {
@@ -416,8 +412,8 @@ void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyC
                         animIndices = animRight;
                     }
                     state = IDLE;
-                    width = 0.4f;
-                    height = 0.4f;
+                    width = 0.5f;
+                    height = 0.5f;
                     
                     
                 }
@@ -443,8 +439,8 @@ void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyC
         
     
     if (entityType == PLAYER && state == IDLE) {
-        width = 0.4;
-        height = 0.4;
+        width = 0.5;
+        height = 0.5;
     }
     
     velocity.x = movement.x * speed;
